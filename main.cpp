@@ -1,8 +1,9 @@
-#include "../include/permutation.hpp"
+#include "algorithms.cpp"
 #include <array>
 #include <iostream>
 
-int main() {
+int main(int, char**) {
+    std::cout << "Hello, world!\n";
     std::array<unsigned char, 5> tab = {2, 3, 1, 5, 4};
     std::array<int, 2> t = {1, 0};
     Permutation<5> p = Permutation<5>(tab);
