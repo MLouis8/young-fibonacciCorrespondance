@@ -1,10 +1,13 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "../doctest.h"
 #include "../include/permutation.hpp"
+#include <array>
+#include <iostream>
 
-TEST_CASE("test de la classe Permutation") {
-    std::vector<int> t{ 3, 1, 2, 4 };
-    Permutation p = Permutation(t);
-    CHECK(p.permutation[1] == 3);
+int main() {
+    std::array<unsigned char, 5> tab = {2, 3, 1, 5, 4};
+    std::array<int, 2> t = {1, 0};
+    Permutation<5> p = Permutation<5>(tab);
+    std::cout << "hello world" << std::endl;
+    std::cout << static_cast<int>(p[1]) << " then " << static_cast<int>(tab[1]) << " finally " << t[1] << std::endl;
+    //std::cout << p; // marche pas
+    return 0;
 }

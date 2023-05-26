@@ -1,16 +1,25 @@
-#include <algorithm>
-#include <cmath>
-#include <vector>
-#include <map>
+#include <array>
+#include <cstddef>
+#include <iostream>
+#include <ostream>
 
-struct Permutation{
-    std::map<int, int> permutation;
-    std::vector<std::vector<int>> permutationMatrix;
+template <size_t T>
+struct Permutation {
+    std::array<unsigned char, T> permutation;
+    std::array<std::array<unsigned char, T>, T> matrix;
 
-    Permutation(std::vector<int> t) {
-        int m = *std::min_element(t.begin(), t.end());
-        for (int i = 0; i < t.size(); i++) {
-            permutation[i + t[i]] = t[i];
-        }
+    Permutation(std::array<unsigned char, T> tab): permutation(tab) {}
+
+    size_t get_size() { return permutation.size(); }
+
+    unsigned char& operator[] (size_t id) {
+        return permutation[id-1];
+    }
+
+    std::ostream& operator<<(std::ostream& os) {
+        os << "[";
+        for (size_t i = 0; i < permutation.size(); i++) os << permutation[i] << ", ";
+        os << permutation.back() << "]" << std::endl;
+        return os;
     }
 };
