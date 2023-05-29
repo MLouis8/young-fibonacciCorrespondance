@@ -9,10 +9,11 @@ InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode *head,
   if (prev) {
     newNode->next = prev->next;
     prev->next = newNode;
-    return head;
+    return newNode;
   }
   newNode->next = head;
-  return newNode;
+  head = newNode;
+  return head;
 }
 
 std::ostream &operator<<(std::ostream &os, InvolutionNode *inv) {
