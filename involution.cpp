@@ -1,8 +1,9 @@
 #include "include/involution.hpp"
 #include <array>
-#include <ostream>
+#include <cstddef>
+#include <iostream>
 
-InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode *head,
+InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode **head,
                            std::array<unsigned char, 2> value) {
   InvolutionNode *newNode = new InvolutionNode;
   newNode->val = value;
@@ -11,9 +12,35 @@ InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode *head,
     prev->next = newNode;
     return newNode;
   }
-  newNode->next = head;
-  head = newNode;
+  newNode->next = *head;
+  head = &newNode; // ne met pas a jour la valeur de head
+  return newNode;
+}
+
+InvolutionNode *buildInvolution(std::vector<std::array<unsigned char, 2>> tab) {
+  InvolutionNode *tail = nullptr;
+  InvolutionNode *head = nullptr;
+  for (size_t i = 0; i < tab.size(); i++) {
+    tail = insertNode(tail, &head, tab[i]);
+    continue;
+  }
   return head;
+}
+
+bool operator==(InvolutionNode invA, InvolutionNode invB) {
+  if (invA.val != invB.val)
+    return false;
+  while (invA.next) {
+    if (not invB.next)
+      return false;
+    invA = *invA.next;
+    invB = *invB.next;
+    if (invA.val != invB.val)
+      return false;
+  }
+  if (invB.next)
+    return false;
+  return true;
 }
 
 std::ostream &operator<<(std::ostream &os, InvolutionNode *inv) {
