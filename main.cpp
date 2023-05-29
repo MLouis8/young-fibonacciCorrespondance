@@ -1,14 +1,19 @@
 #include "algorithms.cpp"
 #include <array>
 #include <iostream>
+#include <vector>
+#include "involution.cpp"
 
-int main(int, char**) {
-    std::cout << "Hello, world!\n";
-    std::array<unsigned char, 5> tab = {2, 3, 1, 5, 4};
-    std::array<int, 2> t = {1, 0};
-    Permutation<5> p = Permutation<5>(tab);
-    std::cout << "hello world" << std::endl;
-    std::cout << static_cast<int>(p[1]) << " then " << static_cast<int>(tab[1]) << " finally " << t[1] << std::endl;
-    //std::cout << p; // marche pas
-    return 0;
+int main(int, char **) {
+  std::cout << "Hello, world!\n";
+  std::array<unsigned char, 7> tab = {2, 7, 1, 5, 6, 4, 3};
+  Permutation<7> p1 = Permutation<7>(tab);
+  std::cout << "Voici la permutation: " << p1 << std::endl;
+  std::vector<int> t;
+  //std::pair<Involution, Involution> involutionsRoby = robyInsertion(p1);
+  // display_tab(involutionsRoby.first);
+  // display_tab(involutionsRoby.second);
+
+
+  return 0;
 }
