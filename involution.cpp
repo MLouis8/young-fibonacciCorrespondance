@@ -18,13 +18,13 @@ InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode *head,
 
 std::ostream &operator<<(std::ostream &os, InvolutionNode *inv) {
   InvolutionNode *act = inv;
-  os << "[";
+  os << "[ ";
   while (act) {
     os << static_cast<int>(act->val[1]) << " ";
     act = act->next;
   }
   act = inv;
-  os << "]" << std::endl << "[";
+  os << "]" << std::endl << "[ ";
   while (act) {
     os << static_cast<int>(act->val[0]) << " ";
     act = act->next;

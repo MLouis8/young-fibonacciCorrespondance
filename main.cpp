@@ -1,8 +1,5 @@
 #include "algorithms.cpp"
 #include "involution.cpp"
-#include <array>
-#include <iostream>
-#include <vector>
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";
@@ -14,13 +11,14 @@ int main(int, char **) {
   //  display_tab(involutionsRoby.first);
   //  display_tab(involutionsRoby.second);
 
-//   InvolutionNode *head = insertNode(nullptr, nullptr, {0, 0});
-//   InvolutionNode *tail = insertNode(head, head, {2, 0});
-//   tail = insertNode(tail, head, {3, 0});
-//   tail = insertNode(tail, head, {4, 0});
-//   tail = insertNode(head, head, {54, 54});
-//   while(tail->next) tail = tail->next;
-//   tail = insertNode(tail, head, {5, 0});
-//   std::cout << head;
+  //   InvolutionNode *head = insertNode(nullptr, nullptr, {0, 0});
+  //   InvolutionNode *tail = insertNode(head, head, {2, 0});
+  //   tail = insertNode(tail, head, {3, 0});
+  //   tail = insertNode(tail, head, {4, 0});
+  //   tail = insertNode(head, head, {54, 54});
+  //   while(tail->next) tail = tail->next;
+  //   tail = insertNode(tail, head, {5, 0});
+  //   std::cout << head;
+
   return 0;
 }

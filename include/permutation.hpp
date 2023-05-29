@@ -20,7 +20,6 @@ template <size_t T> struct Permutation {
 };
 
 typedef std::vector<unsigned char> listeEntiere;
-typedef std::pair<listeEntiere, listeEntiere> Involution;
 typedef std::pair<listeEntiere, listeEntiere> Tableau;
 typedef std::pair<listeEntiere, listeEntiere> STableau;
 typedef std::vector<unsigned char> Chain;
