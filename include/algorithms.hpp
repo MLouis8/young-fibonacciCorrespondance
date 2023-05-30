@@ -15,12 +15,12 @@ template <size_t T> Involutions robyInsertion(Permutation<T> p) {
   Involutions heads;
   Involutions act;
   Involutions prevs;
-  insertNode(act.first, heads.first, {p[1], 0});
+  insertNode(act.first, heads.first, {p.call(1), 0});
   insertNode(act.second, heads.second, {1, 0});
-  for (unsigned char k = 2; k <= p.get_size(); k++) {
+  for (unsigned char k = 2; k <= p.size(); k++) {
     act = heads;
     prevs = {nullptr, nullptr};
-    insert(k, p[k], prevs, act, heads);
+    insert(k, p.call(k), prevs, act, heads);
   }
   return heads;
 }
@@ -28,11 +28,11 @@ template <size_t T> Involutions robyInsertion(Permutation<T> p) {
 template <size_t T>
 std::pair<unsigned char, unsigned char>
 maxNotBlacklisted(Permutation<T> &p, std::array<bool, T> &blacklist) {
-  unsigned char res = p[1];
+  unsigned char res = p.call(1);
   unsigned char resId = 1;
-  for (unsigned char i : p.get_keys()) {
-    if (not blacklist[i - 1] && p[i] > res) {
-      res = p[i];
+  for (unsigned char i : p.keys()) {
+    if (not blacklist[i - 1] && p.call(i) > res) {
+      res = p.call(i);
       resId = i;
     }
   }
@@ -47,21 +47,21 @@ template <size_t T> Involutions janvierInsertion(Permutation<T> p) {
    */
   Involutions res;
   std::array<bool, T> blacklist;
-  std::fill(blacklist.begin(), blacklist.end(), false);
+  blacklist.fill(false);
   Involutions last;
   Involutions heads;
-  for (unsigned char i = p.get_size(); i > 0; i--) {
+  for (unsigned char i = p.size(); i > 0; i--) {
     if (not blacklist[i]) {
       std::cout << "here " << static_cast<int>(i);
       std::pair<unsigned char, unsigned char> maxi =
           maxNotBlacklisted(p, blacklist);
       blacklist[i] = true;
       if (maxi.first == i) {
-        insertNode(last.first, heads.first, {p[i], 0});
+        insertNode(last.first, heads.first, {p.call(i), 0});
         insertNode(last.second, heads.second, {i, 0});
       } else {
         blacklist[maxi.second] = true;
-        insertNode(last.first, heads.first, {p[i], maxi.second});
+        insertNode(last.first, heads.first, {p.call(i), maxi.second});
         insertNode(last.second, heads.second, {maxi.first, i});
       }
     }

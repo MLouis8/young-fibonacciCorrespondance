@@ -42,18 +42,18 @@ int main(int, char **) {
   std::fill(blacklist.begin(), blacklist.end(), false);
   Involutions last;
   Involutions heads;
-  for (unsigned char i = d1.get_size(); i > 0; i--) {
+  for (unsigned char i = d1.size(); i > 0; i--) {
     if (not blacklist[i]) {
       std::cout << "here " << static_cast<int>(i);
       std::pair<unsigned char, unsigned char> maxi =
           maxNotBlacklisted(d1, blacklist);
       blacklist[i] = true;
       if (maxi.first == i) {
-        insertNode(last.first, heads.first, {d1[i], 0});
+        insertNode(last.first, heads.first, {d1.call(i), 0});
         insertNode(last.second, heads.second, {i, 0});
       } else {
         blacklist[maxi.second] = true;
-        insertNode(last.first, heads.first, {d1[i], maxi.second});
+        insertNode(last.first, heads.first, {d1.call(i), maxi.second});
         insertNode(last.second, heads.second, {maxi.first, i});
       }
     }
