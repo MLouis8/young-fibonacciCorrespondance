@@ -21,6 +21,7 @@ InvolutionNode *buildInvolution(std::vector<std::array<unsigned char, 2>> tab) {
   InvolutionNode *head = nullptr;
   for (size_t i = 0; i < tab.size(); i++) {
     insertNode(prev, head, tab[i]);
+    while (prev->next) prev = prev->next;
   }
   return head;
 }

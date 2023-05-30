@@ -1,27 +1,29 @@
 #include "include/algorithms.hpp"
 #include "include/involution.hpp"
 
-std::pair<InvolutionNode *, InvolutionNode *>
-insert(unsigned char key, unsigned char element, InvolutionNode *prev1,
-       InvolutionNode *prev2, InvolutionNode *act1, InvolutionNode *act2,
-       std::pair<InvolutionNode *, InvolutionNode *> heads) {
-  if (element < act1->val[0]) {
-    if (not act1->val[1]) {
-      act1->val[1] = element;
-      act2->val[1] = key;
+void insert(unsigned char key, unsigned char element,
+            std::pair<InvolutionNode *, InvolutionNode *> &prevs,
+            std::pair<InvolutionNode *, InvolutionNode *> &act,
+            std::pair<InvolutionNode *, InvolutionNode *> &heads) {
+  if (element < act.first->val[0]) {
+    if (not act.first->val[1]) {
+      act.first->val[1] = element;
+      act.second->val[1] = key;
     } else {
-      unsigned char temp = act1->val[1];
-      act1->val[1] = element;
-      if (not act1->next) {
-        insertNode(act1, heads.first, {temp, 0});
-        insertNode(act2, heads.second, {key, 0});
-        return heads;
+      unsigned char temp = act.first->val[1];
+      act.first->val[1] = element;
+      if (not act.first->next) {
+        insertNode(act.first, heads.first, {temp, 0});
+        insertNode(act.second, heads.second, {key, 0});
+      } else {
+        prevs = act;
+        act.first = act.first->next;
+        act.second = act.second->next;
+        insert(key, temp, prevs, act, heads);
       }
-      return insert(key, temp, act1, act2, act1->next, act2->next, heads);
     }
   } else {
-    insertNode(prev1, heads.first, {element, 0});
-    insertNode(prev2, heads.second, {key, 0});
+    insertNode(prevs.first, heads.first, {element, 0});
+    insertNode(prevs.second, heads.second, {key, 0});
   }
-  return heads;
 }

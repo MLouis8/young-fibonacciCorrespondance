@@ -24,14 +24,14 @@ TEST_CASE("test de l'insertion de Roby") {
   Permutation<5> p3 = Permutation<5>({5, 3, 4, 1, 2});
   std::pair<InvolutionNode *, InvolutionNode *> heads_C = robyInsertion(p3);
   InvolutionNode *res_C_first = buildInvolution({{5, 2}, {4, 1}, {3, 0}});
-  InvolutionNode *res_C_second = buildInvolution({{1, 2}, {3, 5}, {4, 0}});
+  InvolutionNode *res_C_second = buildInvolution({{1, 2}, {4, 5}, {3, 0}});
   CHECK(*heads_C.first == *res_C_first);
   CHECK(*heads_C.second == *res_C_second);
 
-//   Permutation<5> p4 = Permutation<5>({5, 2, 1, 3, 4});
-//   std::pair<InvolutionNode *, InvolutionNode *> heads_D = robyInsertion(p4);
-//   InvolutionNode *res_D_first = buildInvolution({{5, 4}, {3, 0}, {2, 1}});
-//   InvolutionNode *res_D_second = buildInvolution({{1, 2}, {5, 0}, {3, 4}});
-//   CHECK(*heads_D.first == *res_D_first);
-//   CHECK(*heads_D.second == *res_D_second);
+  Permutation<5> p4 = Permutation<5>({5, 2, 1, 3, 4});
+  std::pair<InvolutionNode *, InvolutionNode *> heads_D = robyInsertion(p4);
+  InvolutionNode *res_D_first = buildInvolution({{5, 4}, {3, 0}, {2, 1}});
+  InvolutionNode *res_D_second = buildInvolution({{1, 2}, {5, 0}, {3, 4}});
+  CHECK(*heads_D.first == *res_D_first);
+  CHECK(*heads_D.second == *res_D_second);
 }

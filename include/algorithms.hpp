@@ -2,20 +2,23 @@
 #include "permutation.hpp"
 #include <utility>
 
-std::pair<InvolutionNode *, InvolutionNode *>
-insert(unsigned char key, unsigned char element, InvolutionNode *prev1,
-       InvolutionNode *prev2, InvolutionNode act1, InvolutionNode act2,
-       std::pair<InvolutionNode*, InvolutionNode*> heads);
+void insert(unsigned char key, unsigned char element,
+            std::pair<InvolutionNode *, InvolutionNode *> &prevs,
+            std::pair<InvolutionNode *, InvolutionNode *> &act,
+            std::pair<InvolutionNode *, InvolutionNode *> &heads);
 
 template <size_t T>
 std::pair<InvolutionNode *, InvolutionNode *> robyInsertion(Permutation<T> p) {
-  std::pair<InvolutionNode *, InvolutionNode *> heads;// = {
-      // insertNode(nullptr, nullptr, {p[1], 0}),
-      // insertNode(nullptr, nullptr, {1, 0})};
+  std::pair<InvolutionNode *, InvolutionNode *> heads;
+  std::pair<InvolutionNode *, InvolutionNode *> act;
+  std::pair<InvolutionNode *, InvolutionNode *> prevs;
+  insertNode(act.first, heads.first, {p[1], 0});
+  insertNode(act.second, heads.second, {1, 0});
   for (unsigned char k = 2; k <= p.get_size(); k++) {
-    std::cout << heads.first << std::endl << heads.second << std::endl;
-    heads = insert(k, p[k], nullptr, nullptr, heads.first,
-                   heads.second, heads);
+    //std::cout << heads.first << std::endl << heads.second << std::endl;
+    act = heads;
+    prevs = {nullptr, nullptr};
+    insert(k, p[k], prevs, act, heads);
   }
   return heads;
 }
