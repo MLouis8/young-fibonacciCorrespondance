@@ -11,6 +11,8 @@ struct InvolutionNode {
   InvolutionNode(const std::array<unsigned char, 2> t, InvolutionNode* n = nullptr): val{t}, next(n) {}
 };
 
+typedef std::pair<InvolutionNode *, InvolutionNode *> Involutions;
+
 void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
                 std::array<unsigned char, 2>);
 
