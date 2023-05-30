@@ -16,5 +16,22 @@ int main(int, char **) {
             << inv.first << std::endl
             << inv.second << std::endl;
 
+  // InvolutionNode *res_A_first = buildInvolution({{1, 3}, {2, 0}});
+  // InvolutionNode *res_A_second = buildInvolution({{2, 3}, {1, 0}});
+  // InvolutionNode *res_B_first = buildInvolution({{2, 3}, {1, 0}});
+  // InvolutionNode *res_B_second = buildInvolution({{2, 3}, {1, 0}});
+  // InvolutionNode *res_C_first = buildInvolution({{2, 5}, {1, 4}, {3, 0}});
+  // InvolutionNode *res_C_second = buildInvolution({{1, 5}, {3, 4}, {2, 0}});
+  // InvolutionNode *res_D_first = buildInvolution({{4, 5}, {3, 0}, {1, 2}});
+  // InvolutionNode *res_D_second = buildInvolution({{1, 5}, {4, 0}, {2, 3}});
+  // std::cout << res_A_first << std::endl;
+  // std::cout << res_A_second << std::endl;
+  // std::cout << res_B_first << std::endl;
+  // std::cout << res_B_second << std::endl;
+  // std::cout << res_C_first << std::endl;
+  // std::cout << res_C_second << std::endl;
+  // std::cout << res_D_first << std::endl;
+  // std::cout << res_D_second << std::endl;
+
   return 0;
 }
