@@ -1,5 +1,5 @@
-#include "include/algorithms.hpp"
-#include "include/involution.hpp"
+#include "../include/algorithms.hpp"
+#include "../include/involution.hpp"
 
 void insert(unsigned char key, unsigned char element,
             std::pair<InvolutionNode *, InvolutionNode *> &prevs,

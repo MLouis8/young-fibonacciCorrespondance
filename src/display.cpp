@@ -1,4 +1,4 @@
-#include "include/permutation.hpp"
+#include "../include/permutation.hpp"
 #include <iostream>
 
 void display_line(listeEntiere l) {

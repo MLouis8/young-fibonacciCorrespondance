@@ -1,6 +1,6 @@
-#include "algorithms.cpp"
 #include "include/involution.hpp"
-#include "involution.cpp"
+#include "src/algorithms.cpp"
+#include "src/involution.cpp"
 #include <array>
 #include <ostream>
 
@@ -11,8 +11,10 @@ int main(int, char **) {
   std::cout << "Voici une permutation: " << p1 << std::endl;
   std::vector<int> t;
 
-  InvolutionNode *head = buildInvolution({{5, 2}, {4, 1}, {3, 0}});
-  std::cout << "Voici une involution:" << std::endl << head << std::endl;
+  std::pair<InvolutionNode *, InvolutionNode *> inv = robyInsertion(p1);
+  std::cout << "Voici ses involutions:" << std::endl
+            << inv.first << std::endl
+            << inv.second << std::endl;
 
   return 0;
 }

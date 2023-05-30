@@ -1,10 +1,11 @@
-#include "include/involution.hpp"
-#include "include/permutation.hpp"
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "algorithms.cpp"
-#include "include/doctest.h"
-#include "involution.cpp"
+#include "../include/doctest.h"
+#include "../include/involution.hpp"
+#include "../include/permutation.hpp"
+
+#include "../src/algorithms.cpp"
+#include "../src/involution.cpp"
 
 TEST_CASE("test de l'insertion de Roby") {
   Permutation<3> p1 = Permutation<3>({2, 3, 1});
