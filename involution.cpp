@@ -3,26 +3,24 @@
 #include <cstddef>
 #include <iostream>
 
-InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode **head,
+void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
                            std::array<unsigned char, 2> value) {
-  InvolutionNode *newNode = new InvolutionNode;
-  newNode->val = value;
+  InvolutionNode *newNode = new InvolutionNode(value);
   if (prev) {
     newNode->next = prev->next;
     prev->next = newNode;
-    return newNode;
+    return;
   }
-  newNode->next = *head;
-  head = &newNode; // ne met pas a jour la valeur de head
-  return newNode;
+  newNode->next = head;
+  prev = newNode;
+  head = newNode;
 }
 
 InvolutionNode *buildInvolution(std::vector<std::array<unsigned char, 2>> tab) {
-  InvolutionNode *tail = nullptr;
+  InvolutionNode *prev = nullptr;
   InvolutionNode *head = nullptr;
   for (size_t i = 0; i < tab.size(); i++) {
-    tail = insertNode(tail, &head, tab[i]);
-    continue;
+    insertNode(prev, head, tab[i]);
   }
   return head;
 }

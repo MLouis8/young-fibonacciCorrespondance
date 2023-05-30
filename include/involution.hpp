@@ -8,10 +8,11 @@
 struct InvolutionNode {
   std::array<unsigned char, 2> val;
   InvolutionNode *next;
+  InvolutionNode(const std::array<unsigned char, 2> t, InvolutionNode* n = nullptr): val{t}, next(n) {}
 };
 
-InvolutionNode *insertNode(InvolutionNode *prev, InvolutionNode **head,
-                           std::array<unsigned char, 2>);
+void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
+                std::array<unsigned char, 2>);
 
 InvolutionNode *buildInvolution(std::vector<std::array<unsigned char, 2>> tab);
 
