@@ -12,11 +12,17 @@ template <size_t T> struct Permutation {
 
   Permutation(std::array<unsigned char, T> tab) : permutation(tab) {}
 
+  std::array<unsigned char, T> get_keys() {
+    std::array<unsigned char, T> res;
+    for (unsigned char i = 1; i <= get_size(); i++) res[i-1] = i;
+    return res;
+  }
+
   size_t get_size() { return permutation.size(); }
 
   unsigned char get_last() { return permutation.back(); }
 
-  unsigned char &operator[](size_t id) { return permutation[id - 1]; }
+  unsigned char &operator[](unsigned char id) { return permutation[id - 1]; }
 };
 
 typedef std::vector<unsigned char> listeEntiere;

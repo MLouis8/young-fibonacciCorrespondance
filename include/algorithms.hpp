@@ -15,7 +15,6 @@ std::pair<InvolutionNode *, InvolutionNode *> robyInsertion(Permutation<T> p) {
   insertNode(act.first, heads.first, {p[1], 0});
   insertNode(act.second, heads.second, {1, 0});
   for (unsigned char k = 2; k <= p.get_size(); k++) {
-    //std::cout << heads.first << std::endl << heads.second << std::endl;
     act = heads;
     prevs = {nullptr, nullptr};
     insert(k, p[k], prevs, act, heads);
