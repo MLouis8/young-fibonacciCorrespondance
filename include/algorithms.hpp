@@ -4,6 +4,8 @@
 #include "involutionChainList.hpp"
 #include "permutation.hpp"
 #include <array>
+#include <cstddef>
+#include <numeric>
 #include <utility>
 
 void insertCList(unsigned char key, unsigned char element,
@@ -29,20 +31,6 @@ template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
   return heads;
 }
 
-template <size_t T>
-std::pair<unsigned char, unsigned char>
-maxNotBlacklisted(Permutation<T> &p, std::array<bool, T> &blacklist) {
-  unsigned char res = 0;
-  unsigned char resId = 0;
-  for (unsigned char i : p.keys()) {
-    if (not blacklist[i - 1] && p.call(i) > res) {
-      res = p.call(i);
-      resId = i;
-    }
-  }
-  return std::pair<unsigned char, unsigned char>{resId, res};
-}
-
 template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
   /**
    * @brief Janvier's modifications of Roby's insertion algorithm
@@ -55,7 +43,7 @@ template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
   for (unsigned char i = p.size(); i > 0; i--) {
     if (not blacklist[i - 1]) {
       std::pair<unsigned char, unsigned char> maxi =
-          maxNotBlacklisted(p, blacklist);
+          p.maxNotBlacklisted(blacklist);
       blacklist[i - 1] = true;
       if (maxi.first == i) {
         res.first.push_back({p.call(i), 0});
@@ -68,4 +56,59 @@ template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
     }
   }
   return res;
+}
+
+template <size_t T>
+void display_chains(
+    std::pair<std::array<unsigned char, T>, std::array<unsigned char, T>> a) {
+  std::cout << "[ ";
+  for (unsigned char c : a.first) {
+    std::cout << static_cast<int>(c) << " ";
+  }
+  std::cout << "]\n[ ";
+  for (unsigned char c : a.second) {
+    std::cout << static_cast<int>(c) << " ";
+  }
+  std::cout << "]\n";
+}
+
+template <size_t T>
+std::pair<std::array<unsigned char, T + 1>, std::array<unsigned char, T + 1>>
+permutationToChains(Permutation<T> p) {
+  /**
+   * @brief Returns pair of chains in the Young-Fibonacci lattice from a
+   * permutation, without computing growth diagram.
+   *
+   * @param p a permutation
+   * @return pair of paths in the Young-Fibonacci graph
+   */
+  std::array<unsigned char, T + 1> chain1, chain2;
+  for (unsigned char i = 0; i < T + 1; i++) {
+    if (i < 2) {
+      chain1[i] = i;
+      chain2[i] = i;
+    } else {
+      std::array<bool, T> blacklist;
+      std::fill(blacklist.begin(), blacklist.begin() + i, false);
+      if (i < T)
+        std::fill(blacklist.begin() + i, blacklist.end(), true);
+      unsigned char x = 0;
+      unsigned char s =
+          std::accumulate(blacklist.begin(), blacklist.begin() + i + 1, 0);
+      std::cout << static_cast<int>(s);
+      int cpt = 0;
+      while (s != i && cpt < 9) {
+        cpt++;
+        std::pair<unsigned char, unsigned char> maxi =
+            p.maxNotBlacklisted(blacklist);
+        blacklist[maxi.first] = true;
+        x = x * 10 + p.fominRule(maxi.first, blacklist);
+        std::cout << "\ns : " << static_cast<int>(s) << " et x "
+                  << static_cast<int>(x) << " et i : " << static_cast<int>(i);
+        s = std::accumulate(blacklist.begin(), blacklist.begin() + i + 1, 0);
+      }
+      chain1[i] = x;
+    }
+  }
+  return {chain1, chain2};
 }

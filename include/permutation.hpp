@@ -39,7 +39,7 @@ public:
     check_permu(tab);
   }
 
-  std::array<unsigned char, T> keys() {
+  std::array<unsigned char, T> keys() const {
     std::array<unsigned char, T> res;
     std::iota(res.begin(), res.end(), 1);
     return res;
@@ -50,6 +50,34 @@ public:
   unsigned char back() const { return permutation.back(); }
 
   unsigned char call(unsigned char id) const { return permutation[id - 1]; }
+
+  std::pair<unsigned char, unsigned char>
+  maxNotBlacklisted(std::array<bool, T> blacklist) const {
+    unsigned char res = 0;
+    unsigned char resId = 0;
+    for (unsigned char i : keys()) {
+      if (not blacklist[i - 1] && call(i) > res) {
+        res = call(i);
+        resId = i;
+      }
+    }
+    return std::pair<unsigned char, unsigned char>{resId, res};
+  }
+
+  unsigned char fominRule(unsigned char idMax, std::array<bool, T> &blacklist) {
+    unsigned char ele = 0;
+    for (unsigned char i = idMax-1; i < blacklist.size(); i++) {
+      if (not blacklist[i]) {
+        ele = i;
+      }
+    }
+    if (ele == 0) {
+      return 1;
+    } else {
+      blacklist[ele] = true;
+      return 2;
+    }
+  } 
 };
 
 template <size_t T>
