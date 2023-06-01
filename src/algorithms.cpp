@@ -1,8 +1,8 @@
 #include "../include/algorithms.hpp"
-#include "../include/involution.hpp"
+#include "../include/involutionChainList.hpp"
 
-void insert(unsigned char key, unsigned char element, Involutions &prevs,
-            Involutions &act, Involutions &heads) {
+void insertCList(unsigned char key, unsigned char element, InvolutionsCLists &prevs,
+            InvolutionsCLists &act, InvolutionsCLists &heads) {
   if (element < act.first->val[0]) {
     if (not act.first->val[1]) {
       act.first->val[1] = element;
@@ -17,7 +17,7 @@ void insert(unsigned char key, unsigned char element, Involutions &prevs,
         prevs = act;
         act.first = act.first->next;
         act.second = act.second->next;
-        insert(key, temp, prevs, act, heads);
+        insertCList(key, temp, prevs, act, heads);
       }
     }
   } else {

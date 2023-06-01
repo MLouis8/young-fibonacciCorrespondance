@@ -5,13 +5,17 @@
 #include <ostream>
 #include <vector>
 
+typedef std::pair<std::vector<std::array<unsigned char, 2>>, std::vector<std::array<unsigned char, 2>>> InvolutionsVector;
+
 struct InvolutionNode {
   std::array<unsigned char, 2> val;
   InvolutionNode *next;
-  InvolutionNode(const std::array<unsigned char, 2> t, InvolutionNode* n = nullptr): val{t}, next(n) {}
+  InvolutionNode(const std::array<unsigned char, 2> t,
+                 InvolutionNode *n = nullptr)
+      : val{t}, next(n) {}
 };
 
-typedef std::pair<InvolutionNode *, InvolutionNode *> Involutions;
+typedef std::pair<InvolutionNode *, InvolutionNode *> InvolutionsCLists;
 
 void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
                 std::array<unsigned char, 2>);

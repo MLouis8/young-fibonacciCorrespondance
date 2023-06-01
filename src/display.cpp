@@ -1,20 +1,15 @@
-#include "../include/permutation.hpp"
+#include "../include/involutionChainList.hpp"
+#include <array>
 #include <iostream>
 
-void display_line(listeEntiere l) {
-  if (l.empty()) {
-    std::cout << "[]";
-  } else {
-    std::cout << "[";
-    for (size_t i = 0; i < l.size() - 1; i++) {
-      std::cout << l[i] << ", ";
-    }
-    std::cout << l.back() << "]";
+void display_involution(std::vector<std::array<unsigned char, 2>> v) {
+  std::cout << "[ ";
+  for (std::array<unsigned char, 2> a : v) {
+    std::cout << static_cast<int>(a[1]) << " ";
   }
-}
-
-void display_tab(std::pair<listeEntiere, listeEntiere> p) {
-  display_line(p.second);
-  std::cout << std::endl;
-  display_line(p.first);
+  std::cout << "]" << std::endl << "[ ";
+  for (std::array<unsigned char, 2> a : v) {
+    std::cout << static_cast<int>(a[0]) << " ";
+  }
+  std::cout << "]" << std::endl;
 }
