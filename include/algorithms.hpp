@@ -31,7 +31,8 @@ template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
   return heads;
 }
 
-void insertVector(unsigned char key, unsigned char element, InvolutionsVector &v, size_t id);
+void insertVector(unsigned char key, unsigned char element,
+                  InvolutionsVector &v, size_t id);
 
 template <size_t T> InvolutionsVector robyInsertionVector(Permutation<T> p) {
   /**
@@ -39,13 +40,13 @@ template <size_t T> InvolutionsVector robyInsertionVector(Permutation<T> p) {
    * @param p a permutation
    * @return a std::pair of InvolutionsCLists (Vector)
    */
-   InvolutionsVector res;
-   res.first.push_back({p.call(1), 0});
-   res.second.push_back({1, 0});
-   for (unsigned char k = 2; k <= p.size(); k++) {
+  InvolutionsVector res;
+  res.first.push_back({p.call(1), 0});
+  res.second.push_back({1, 0});
+  for (unsigned char k = 2; k <= p.size(); k++) {
     insertVector(k, p.call(k), res, 0);
   }
-   return res;
+  return res;
 }
 
 template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
@@ -110,19 +111,20 @@ permutationToChains(Permutation<T> p) {
       if (i < T)
         std::fill(blacklist.begin() + i, blacklist.end(), true);
       unsigned char x = 0;
-      unsigned char s =
-          std::accumulate(blacklist.begin(), blacklist.begin() + i + 1, 0);
+      unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
       std::cout << static_cast<int>(s);
-      int cpt = 0;
-      while (s != i && cpt < 9) {
-        cpt++;
+      while (s < blacklist.size()) {
         std::pair<unsigned char, unsigned char> maxi =
             p.maxNotBlacklisted(blacklist);
-        blacklist[maxi.first] = true;
+        blacklist[maxi.first - 1] = true;
+        std::cout <<"\n" << std::accumulate(blacklist.begin(), blacklist.end(), 0) << "<-quoi ??";
         x = x * 10 + p.fominRule(maxi.first, blacklist);
-        std::cout << "\ns : " << static_cast<int>(s) << " et x "
-                  << static_cast<int>(x) << " et i : " << static_cast<int>(i);
         s = std::accumulate(blacklist.begin(), blacklist.begin() + i + 1, 0);
+        std::cout << "\ns : " << static_cast<int>(s) << " et x "
+                  << static_cast<int>(x) << " et i : " << static_cast<int>(i)
+                  << " et puis le max et son id "
+                  << static_cast<int>(maxi.first) << " "
+                  << static_cast<int>(maxi.second);
       }
       chain1[i] = x;
     }
