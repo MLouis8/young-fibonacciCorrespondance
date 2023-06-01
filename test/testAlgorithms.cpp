@@ -14,7 +14,7 @@ Permutation<5> p3 = Permutation<5>({5, 3, 4, 1, 2});
 Permutation<5> p4 = Permutation<5>({5, 2, 1, 3, 4});
 Permutation<4> p5 = Permutation<4>({3, 1, 4, 2});
 
-TEST_CASE("Test insertion de Roby") {
+TEST_CASE("Test insertion de Roby, version liste chainee") {
   InvolutionsCLists heads_A = robyInsertionCList(p1);
   InvolutionNode *res_A_first = buildInvolution({{3, 1}, {2, 0}});
   InvolutionNode *res_A_second = buildInvolution({{2, 3}, {1, 0}});
@@ -38,6 +38,19 @@ TEST_CASE("Test insertion de Roby") {
   InvolutionNode *res_D_second = buildInvolution({{1, 2}, {5, 0}, {3, 4}});
   CHECK(*heads_D.first == *res_D_first);
   CHECK(*heads_D.second == *res_D_second);
+}
+
+TEST_CASE("Test insertion de Roby, version vector") {
+  InvolutionsVector vector_A = robyInsertionVector(p1);
+  InvolutionsVector res_A = {{{3, 1}, {2, 0}}, {{2, 3}, {1, 0}}};
+  CHECK(vector_A.first == res_A.first);
+  CHECK(vector_A.second == res_A.second);
+
+  InvolutionsVector vector_C = robyInsertionVector(p3);
+  InvolutionsVector res_C = {{{5, 2}, {4, 1}, {3, 0}},
+                             {{1, 2}, {4, 5}, {3, 0}}};
+  CHECK(vector_C.first == res_C.first);
+  CHECK(vector_C.second == res_C.second);
 }
 
 TEST_CASE("Test insertion Janvier") {

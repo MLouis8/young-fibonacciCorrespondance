@@ -16,7 +16,7 @@ template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
   /**
    * @brief Roby's Insertion algorithm.
    * @param p a permutation
-   * @return a std::pair of InvolutionsCLists
+   * @return a std::pair of InvolutionsCLists (Chain Lists)
    */
   InvolutionsCLists heads;
   InvolutionsCLists act;
@@ -29,6 +29,23 @@ template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
     insertCList(k, p.call(k), prevs, act, heads);
   }
   return heads;
+}
+
+void insertVector(unsigned char key, unsigned char element, InvolutionsVector &v, size_t id);
+
+template <size_t T> InvolutionsVector robyInsertionVector(Permutation<T> p) {
+  /**
+   * @brief Roby's Insertion algorithm.
+   * @param p a permutation
+   * @return a std::pair of InvolutionsCLists (Vector)
+   */
+   InvolutionsVector res;
+   res.first.push_back({p.call(1), 0});
+   res.second.push_back({1, 0});
+   for (unsigned char k = 2; k <= p.size(); k++) {
+    insertVector(k, p.call(k), res, 0);
+  }
+   return res;
 }
 
 template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
