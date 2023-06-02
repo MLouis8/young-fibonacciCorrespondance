@@ -93,7 +93,7 @@ void display_chains(
 
 template <size_t T>
 unsigned char computeFiboNode(std::array<bool, T> blacklist,
-                               Permutation<T> &p) {
+                              Permutation<T> &p) {
   unsigned char res = 0;
   unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
   while (s < blacklist.size()) {
@@ -122,15 +122,15 @@ permutationToChains(Permutation<T> p) {
   blacklistQ[0] = false;
   std::array<bool, T> blacklistP;
   blacklistP.fill(true);
-  blacklistP[p.minBlacklisted(blacklistP)-1] = false;
+  blacklistP[p.minBlacklisted(blacklistP) - 1] = false;
   for (unsigned char i = 0; i < T + 1; i++) {
     if (i < 2) {
       chain1[i] = i;
       chain2[i] = i;
     } else {
-      blacklistQ[i-1] = false;
+      blacklistQ[i - 1] = false;
       chain1[i] = computeFiboNode(blacklistQ, p);
-      blacklistP[p.minBlacklisted(blacklistP)-1] = false;
+      blacklistP[p.minBlacklisted(blacklistP) - 1] = false;
       chain2[i] = computeFiboNode(blacklistP, p);
     }
   }

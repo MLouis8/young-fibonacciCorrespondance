@@ -65,7 +65,7 @@ public:
   }
 
   unsigned char minBlacklisted(std::array<bool, T> blacklist) const {
-    unsigned char res = size()+1;
+    unsigned char res = size() + 1;
     unsigned char resId = 0;
     for (unsigned char i : keys()) {
       if (blacklist[i - 1] && call(i) < res) {
