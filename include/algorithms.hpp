@@ -79,22 +79,21 @@ template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
 
 template <size_t T>
 void display_chains(
-    std::pair<std::array<unsigned char, T>, std::array<unsigned char, T>> a) {
+    std::pair<std::array<size_t, T>, std::array<size_t, T>> a) {
   std::cout << "[ ";
-  for (unsigned char c : a.first) {
-    std::cout << static_cast<int>(c) << " ";
+  for (size_t c : a.first) {
+    std::cout << c << " ";
   }
   std::cout << "]\n[ ";
-  for (unsigned char c : a.second) {
-    std::cout << static_cast<int>(c) << " ";
+  for (size_t c : a.second) {
+    std::cout << c << " ";
   }
   std::cout << "]\n";
 }
 
 template <size_t T>
-unsigned char computeFiboNode(std::array<bool, T> blacklist,
-                              Permutation<T> &p) {
-  unsigned char res = 0;
+size_t computeFiboNode(std::array<bool, T> blacklist, Permutation<T> &p) {
+  size_t res = 0;
   unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
   while (s < blacklist.size()) {
     std::pair<unsigned char, unsigned char> maxi =
@@ -107,7 +106,7 @@ unsigned char computeFiboNode(std::array<bool, T> blacklist,
 }
 
 template <size_t T>
-std::pair<std::array<unsigned char, T + 1>, std::array<unsigned char, T + 1>>
+std::pair<std::array<size_t, T + 1>, std::array<size_t, T + 1>>
 permutationToChains(Permutation<T> p) {
   /**
    * @brief Returns pair of chains in the Young-Fibonacci lattice from a
@@ -116,7 +115,7 @@ permutationToChains(Permutation<T> p) {
    * @param p a permutation
    * @return pair of paths in the Young-Fibonacci graph
    */
-  std::array<unsigned char, T + 1> chain1, chain2;
+  std::array<size_t, T + 1> chain1, chain2;
   std::array<bool, T> blacklistQ;
   blacklistQ.fill(true);
   blacklistQ[0] = false;

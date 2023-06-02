@@ -21,6 +21,7 @@ int main(int, char **) {
   display_involution(invST.first);
   std::cout << std::endl;
   display_involution(invST.second);
+  std::cout << "\nEt finalement ses chemins dans le graphe de Young-Fibonacci:\n" << std::endl;
   auto r = permutationToChains(p1);
   display_chains(r);
 

@@ -78,37 +78,37 @@ TEST_CASE("Test insertion Janvier") {
 }
 
 TEST_CASE("Test algo permutation->chaines dans YF") {
-  std::pair<std::array<unsigned char, 4>, std::array<unsigned char, 4>>
+  std::pair<std::array<size_t, 4>, std::array<size_t, 4>>
       chain_A = permutationToChains(p1);
-  std::array<unsigned char, 4> res_A_first = {0, 1, 11, 21};
-  std::array<unsigned char, 4> res_A_second = {0, 1, 2, 21};
+  std::array<size_t, 4> res_A_first = {0, 1, 11, 21};
+  std::array<size_t, 4> res_A_second = {0, 1, 2, 21};
   CHECK(chain_A.first == res_A_first);
   CHECK(chain_A.second == res_A_second);
 
-  std::pair<std::array<unsigned char, 4>, std::array<unsigned char, 4>>
+  std::pair<std::array<size_t, 4>, std::array<size_t, 4>>
       chain_B = permutationToChains(p2);
-  std::array<unsigned char, 4> res_B = {0, 1, 11, 21};
+  std::array<size_t, 4> res_B = {0, 1, 11, 21};
   CHECK(chain_B.first == res_B);
   CHECK(chain_B.second == res_B);
 
-  std::pair<std::array<unsigned char, 6>, std::array<unsigned char, 6>>
+  std::pair<std::array<size_t, 6>, std::array<size_t, 6>>
       chain_C = permutationToChains(p3);
-  std::array<unsigned char, 6> res_C_first = {0, 1, 2, 21, 211, 221};
-  std::array<unsigned char, 6> res_C_second = {0, 1, 11, 21, 22, 221};
+  std::array<size_t, 6> res_C_first = {0, 1, 2, 21, 211, 221};
+  std::array<size_t, 6> res_C_second = {0, 1, 11, 21, 22, 221};
   CHECK(chain_C.first == res_C_first);
   CHECK(chain_C.second == res_C_second);
 
-  std::pair<std::array<unsigned char, 6>, std::array<unsigned char, 6>>
+  std::pair<std::array<size_t, 6>, std::array<size_t, 6>>
       chain_D = permutationToChains(p4);
-  std::array<unsigned char, 6> res_D_first = {0, 1, 2, 21, 22, 212};
-  std::array<unsigned char, 6> res_D_second = {0, 1, 2, 12, 112, 212};
+  std::array<size_t, 6> res_D_first = {0, 1, 2, 21, 22, 212};
+  std::array<size_t, 6> res_D_second = {0, 1, 2, 12, 112, 212};
   CHECK(chain_D.first == res_D_first);
   CHECK(chain_D.second == res_D_second);
 
-  std::pair<std::array<unsigned char, 5>, std::array<unsigned char, 5>>
+  std::pair<std::array<size_t, 5>, std::array<size_t, 5>>
       chain_E = permutationToChains(p5);
-  std::array<unsigned char, 5> res_E_first = {0, 1, 2, 12, 22};
-  std::array<unsigned char, 5> res_E_second = {0, 1, 11, 21, 22};
+  std::array<size_t, 5> res_E_first = {0, 1, 2, 12, 22};
+  std::array<size_t, 5> res_E_second = {0, 1, 11, 21, 22};
   CHECK(chain_E.first == res_E_first);
   CHECK(chain_E.second == res_E_second);
 }
