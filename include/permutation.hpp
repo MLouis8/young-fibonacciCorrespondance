@@ -64,9 +64,19 @@ public:
     return std::pair<unsigned char, unsigned char>{resId, res};
   }
 
+  unsigned char minBlacklisted(std::array<bool, T> blacklist) const {
+    unsigned char res = size()+1;
+    unsigned char resId = 0;
+    for (unsigned char i : keys()) {
+      if (blacklist[i - 1] && call(i) < res) {
+        res = call(i);
+        resId = i;
+      }
+    }
+    return resId;
+  }
+
   unsigned char fominRule(unsigned char idMax, std::array<bool, T> &blacklist) {
-    std::cout << "\nICIC: "
-              << std::accumulate(blacklist.begin(), blacklist.end(), 0) << "\n";
     unsigned char ele;
     bool flag = true;
     for (unsigned char i = idMax - 1; i < blacklist.size(); i++) {

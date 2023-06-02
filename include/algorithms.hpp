@@ -92,6 +92,21 @@ void display_chains(
 }
 
 template <size_t T>
+unsigned char computeFiboNode(std::array<bool, T> blacklist,
+                               Permutation<T> &p) {
+  unsigned char res = 0;
+  unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
+  while (s < blacklist.size()) {
+    std::pair<unsigned char, unsigned char> maxi =
+        p.maxNotBlacklisted(blacklist);
+    blacklist[maxi.first - 1] = true;
+    res = res * 10 + p.fominRule(maxi.first, blacklist);
+    s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
+  }
+  return res;
+}
+
+template <size_t T>
 std::pair<std::array<unsigned char, T + 1>, std::array<unsigned char, T + 1>>
 permutationToChains(Permutation<T> p) {
   /**
@@ -102,26 +117,21 @@ permutationToChains(Permutation<T> p) {
    * @return pair of paths in the Young-Fibonacci graph
    */
   std::array<unsigned char, T + 1> chain1, chain2;
+  std::array<bool, T> blacklistQ;
+  blacklistQ.fill(true);
+  blacklistQ[0] = false;
+  std::array<bool, T> blacklistP;
+  blacklistP.fill(true);
+  blacklistP[p.minBlacklisted(blacklistP)-1] = false;
   for (unsigned char i = 0; i < T + 1; i++) {
     if (i < 2) {
       chain1[i] = i;
       chain2[i] = i;
     } else {
-      std::array<bool, T> blacklist;
-      std::fill(blacklist.begin(), blacklist.begin() + i, false);
-      if (i < T)
-        std::fill(blacklist.begin() + i, blacklist.end(), true);
-      unsigned char x = 0;
-      unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
-      
-      while (s < blacklist.size()) {
-        std::pair<unsigned char, unsigned char> maxi =
-            p.maxNotBlacklisted(blacklist);
-        blacklist[maxi.first - 1] = true;
-        x = x * 10 + p.fominRule(maxi.first, blacklist);
-        s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
-      }
-      chain1[i] = x;
+      blacklistQ[i-1] = false;
+      chain1[i] = computeFiboNode(blacklistQ, p);
+      blacklistP[p.minBlacklisted(blacklistP)-1] = false;
+      chain2[i] = computeFiboNode(blacklistP, p);
     }
   }
   return {chain1, chain2};
