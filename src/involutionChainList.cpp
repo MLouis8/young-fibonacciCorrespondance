@@ -4,7 +4,7 @@
 #include <iostream>
 
 void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
-                           std::array<unsigned char, 2> value) {
+                std::array<unsigned char, 2> value) {
   InvolutionNode *newNode = new InvolutionNode(value);
   if (prev) {
     newNode->next = prev->next;
@@ -21,7 +21,8 @@ InvolutionNode *buildInvolution(std::vector<std::array<unsigned char, 2>> tab) {
   InvolutionNode *head = nullptr;
   for (size_t i = 0; i < tab.size(); i++) {
     insertNode(prev, head, tab[i]);
-    while (prev->next) prev = prev->next;
+    while (prev->next)
+      prev = prev->next;
   }
   return head;
 }

@@ -65,10 +65,11 @@ public:
   }
 
   unsigned char fominRule(unsigned char idMax, std::array<bool, T> &blacklist) {
-    std::cout << "\nICIC: " << std::accumulate(blacklist.begin(), blacklist.end(), 0) << "\n";
+    std::cout << "\nICIC: "
+              << std::accumulate(blacklist.begin(), blacklist.end(), 0) << "\n";
     unsigned char ele;
     bool flag = true;
-    for (unsigned char i = idMax-1; i < blacklist.size(); i++) {
+    for (unsigned char i = idMax - 1; i < blacklist.size(); i++) {
       if (not blacklist[i]) {
         ele = i;
         flag = false;
@@ -80,7 +81,7 @@ public:
       blacklist[ele] = true;
       return 2;
     }
-  } 
+  }
 };
 
 template <size_t T>

@@ -3,6 +3,7 @@
 #include "../src/display.cpp"
 #include "involutionChainList.hpp"
 #include "permutation.hpp"
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <numeric>
@@ -112,19 +113,13 @@ permutationToChains(Permutation<T> p) {
         std::fill(blacklist.begin() + i, blacklist.end(), true);
       unsigned char x = 0;
       unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
-      std::cout << static_cast<int>(s);
+      
       while (s < blacklist.size()) {
         std::pair<unsigned char, unsigned char> maxi =
             p.maxNotBlacklisted(blacklist);
         blacklist[maxi.first - 1] = true;
-        std::cout <<"\n" << std::accumulate(blacklist.begin(), blacklist.end(), 0) << "<-quoi ??";
         x = x * 10 + p.fominRule(maxi.first, blacklist);
-        s = std::accumulate(blacklist.begin(), blacklist.begin() + i + 1, 0);
-        std::cout << "\ns : " << static_cast<int>(s) << " et x "
-                  << static_cast<int>(x) << " et i : " << static_cast<int>(i)
-                  << " et puis le max et son id "
-                  << static_cast<int>(maxi.first) << " "
-                  << static_cast<int>(maxi.second);
+        s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
       }
       chain1[i] = x;
     }
