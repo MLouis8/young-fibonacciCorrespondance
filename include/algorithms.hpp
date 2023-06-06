@@ -78,8 +78,7 @@ template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
 }
 
 template <size_t T>
-void display_chains(
-    std::pair<std::array<size_t, T>, std::array<size_t, T>> a) {
+void display_chains(std::pair<std::array<size_t, T>, std::array<size_t, T>> a) {
   std::cout << "[ ";
   for (size_t c : a.first) {
     std::cout << c << " ";

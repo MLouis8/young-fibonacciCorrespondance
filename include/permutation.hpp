@@ -32,7 +32,7 @@ public:
   Permutation() {
     std::array<unsigned char, T> tab;
     std::iota(tab.begin(), tab.end(), 1);
-    permutation(tab);
+    permutation = tab;
   }
 
   Permutation(std::array<unsigned char, T> tab) : permutation(tab) {
