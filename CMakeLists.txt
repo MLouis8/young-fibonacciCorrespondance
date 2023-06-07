@@ -16,3 +16,5 @@ include(CPack)
 
 find_package(benchmark REQUIRED)
 target_link_libraries(benchmarks benchmark::benchmark)
+
+add_compile_options(-mavx2)

@@ -32,8 +32,9 @@ public:
     permutation = tab;
   }
 
-  Permutation(std::array<unsigned char, T> tab) : permutation(tab) {
+  Permutation(std::array<unsigned char, T> tab) {
     check_permu(tab);
+    permutation = tab;
   }
 
   std::array<unsigned char, T> keys() const {

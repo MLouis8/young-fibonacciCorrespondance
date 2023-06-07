@@ -1,5 +1,3 @@
-#include <immintrin.h>
-
 #include "include/algorithms/janvierInsertion.hpp"
 #include "include/algorithms/permuToChains.hpp"
 #include "include/permAVX.hpp"
@@ -50,6 +48,7 @@ int main(int, char **) {
   display_chains(r2);
   std::cout << "------------------------------------------------------"
             << std::endl;
-
+  PermAVX<2>p_avx = PermAVX<2>({2, 3});
+  display_AVX_vector<2>(p_avx.call(0));
   return 0;
 }
