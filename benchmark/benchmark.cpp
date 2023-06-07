@@ -1,6 +1,8 @@
-#include "../include/algorithms.hpp"
+#include "../include/algorithms/robyInsertion.hpp"
+#include "../include/algorithms/janvierInsertion.hpp"
+#include "../include/algorithms/permuToChains.hpp"
 #include "../include/involutionChainList.hpp"
-#include "../src/algorithms.cpp"
+#include "../src/robyInsertion.cpp"
 #include "../src/involutionChainList.cpp"
 #include "data.cpp"
 #include <array>

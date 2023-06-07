@@ -1,12 +1,11 @@
-#include <array>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "../include/doctest.h"
-#include "../include/involutionChainList.hpp"
-#include "../include/permutation.hpp"
+#include "../include/algorithms/permuToChains.hpp"
+#include "../include/algorithms/janvierInsertion.hpp"
 
-#include "../src/algorithms.cpp"
 #include "../src/involutionChainList.cpp"
+#include "../src/robyInsertion.cpp"
 
 Permutation<3> p1 = Permutation<3>({2, 3, 1});
 Permutation<3> p2 = Permutation<3>({1, 3, 2});
@@ -60,8 +59,7 @@ TEST_CASE("Test insertion de Roby, version std::list") {
   CHECK(list_A.second == res_A.second);
 
   InvolutionsList list_C = robyInsertionList(p3);
-  InvolutionsList res_C = {{{5, 2}, {4, 1}, {3, 0}},
-                             {{1, 2}, {4, 5}, {3, 0}}};
+  InvolutionsList res_C = {{{5, 2}, {4, 1}, {3, 0}}, {{1, 2}, {4, 5}, {3, 0}}};
   CHECK(list_C.first == res_C.first);
   CHECK(list_C.second == res_C.second);
 }
@@ -73,8 +71,7 @@ TEST_CASE("Test insertion de Roby, version std::forward_list") {
   CHECK(flist_A.second == res_A.second);
 
   InvolutionsFList flist_C = robyInsertionFList(p3);
-  InvolutionsFList res_C = {{{5, 2}, {4, 1}, {3, 0}},
-                             {{1, 2}, {4, 5}, {3, 0}}};
+  InvolutionsFList res_C = {{{5, 2}, {4, 1}, {3, 0}}, {{1, 2}, {4, 5}, {3, 0}}};
   CHECK(flist_C.first == res_C.first);
   CHECK(flist_C.second == res_C.second);
 }

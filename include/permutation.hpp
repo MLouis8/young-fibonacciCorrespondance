@@ -1,11 +1,8 @@
 #pragma once
 
 #include <array>
-#include <cstddef>
-#include <iostream>
 #include <numeric>
 #include <ostream>
-#include <stdexcept>
 #include <vector>
 
 template <size_t T> class Permutation {

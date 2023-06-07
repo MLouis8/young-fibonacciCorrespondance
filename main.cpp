@@ -1,15 +1,12 @@
-#include "include/algorithms.hpp"
-#include "include/involutionChainList.hpp"
-#include "include/permAVX.hpp"
-#include "src/algorithms.cpp"
-#include "src/involutionChainList.cpp"
-#include <array>
-#include <cstddef>
-#include <forward_list>
 #include <immintrin.h>
-#include <iterator>
-#include <numeric>
-#include <ostream>
+
+#include "include/algorithms/janvierInsertion.hpp"
+#include "include/algorithms/permuToChains.hpp"
+#include "include/permAVX.hpp"
+#include "include/display.hpp"
+#include "src/robyInsertion.cpp"
+#include "src/involutionChainList.cpp"
+#include "src/display.cpp"
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";

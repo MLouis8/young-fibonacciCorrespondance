@@ -1,7 +1,4 @@
 #include "../include/involutionChainList.hpp"
-#include <array>
-#include <cstddef>
-#include <iostream>
 
 void insertNode(InvolutionNode *&prev, InvolutionNode *&head,
                 std::array<unsigned char, 2> value) {

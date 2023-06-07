@@ -1,7 +1,5 @@
-#include "../include/algorithms.hpp"
+#include "../include/algorithms/robyInsertion.hpp"
 #include "../include/involutionChainList.hpp"
-#include <cstddef>
-#include <iterator>
 
 void insertCList(unsigned char key, unsigned char element,
                  InvolutionsCLists &prevs, InvolutionsCLists &act,

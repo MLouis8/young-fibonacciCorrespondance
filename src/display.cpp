@@ -1,5 +1,6 @@
+#pragma once
+
 #include "../include/involutionChainList.hpp"
-#include <array>
 #include <iostream>
 
 void display_involution(std::vector<std::array<unsigned char, 2>> v) {
