@@ -5,10 +5,6 @@
 #include <ostream>
 #include <vector>
 
-typedef std::pair<std::vector<std::array<unsigned char, 2>>,
-                  std::vector<std::array<unsigned char, 2>>>
-    InvolutionsVector;
-
 struct InvolutionNode {
   std::array<unsigned char, 2> val;
   InvolutionNode *next;

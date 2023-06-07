@@ -1,6 +1,7 @@
 #include "../include/algorithms.hpp"
 #include "../include/involutionChainList.hpp"
 #include <cstddef>
+#include <iterator>
 
 void insertCList(unsigned char key, unsigned char element,
                  InvolutionsCLists &prevs, InvolutionsCLists &act,
@@ -25,6 +26,28 @@ void insertCList(unsigned char key, unsigned char element,
   } else {
     insertNode(prevs.first, heads.first, {element, 0});
     insertNode(prevs.second, heads.second, {key, 0});
+  }
+}
+
+void insertList(unsigned char key, unsigned char element, InvolutionsList &l,
+                LIterator it1, LIterator it2) {
+  if (element < (*it1)[0]) {
+    if ((*it1)[1] == 0) {
+      (*it1)[1] = element;
+      (*it2)[1] = key;
+    } else {
+      unsigned char temp = (*it1)[1];
+      (*it1)[1] = element;
+      if (it1 == l.first.end()) {
+        l.first.push_back({temp, 0});
+        l.second.push_back({key, 0});
+      } else {
+        insertList(key, temp, l, std::next(it1), std::next(it2));
+      }
+    }
+  } else {
+    l.first.insert(it1, {element, 0});
+    l.second.insert(it2, {key, 0});
   }
 }
 

@@ -6,8 +6,19 @@
 #include <algorithm>
 #include <array>
 #include <cstddef>
+#include <list>
 #include <numeric>
 #include <utility>
+
+typedef std::pair<std::vector<std::array<unsigned char, 2>>,
+                  std::vector<std::array<unsigned char, 2>>>
+    InvolutionsVector;
+
+typedef std::pair<std::list<std::array<unsigned char, 2>>,
+                  std::list<std::array<unsigned char, 2>>>
+    InvolutionsList;
+
+typedef std::_List_iterator<std::array<unsigned char, 2>> LIterator;
 
 void insertCList(unsigned char key, unsigned char element,
                  InvolutionsCLists &prevs, InvolutionsCLists &act,
@@ -46,6 +57,24 @@ template <size_t T> InvolutionsVector robyInsertionVector(Permutation<T> p) {
   res.second.push_back({1, 0});
   for (unsigned char k = 2; k <= p.size(); k++) {
     insertVector(k, p.call(k), res, 0);
+  }
+  return res;
+}
+
+void insertList(unsigned char key, unsigned char element, InvolutionsList &l,
+                LIterator it1, LIterator it2);
+
+template <size_t T> InvolutionsList robyInsertionList(Permutation<T> p) {
+  /**
+   * @brief Roby's Insertion algorithm.
+   * @param p a permutation
+   * @return a std::pair of InvolutionsCLists (List)
+   */
+  InvolutionsList res;
+  res.first.push_front({p.call(1), 0});
+  res.second.push_front({1, 0});
+  for (unsigned char k = 2; k <= p.size(); k++) {
+    insertList(k, p.call(k), res, res.first.begin(), res.second.begin());
   }
   return res;
 }

@@ -2,9 +2,13 @@
 #include "include/involutionChainList.hpp"
 #include "src/algorithms.cpp"
 #include "src/involutionChainList.cpp"
+#include "include/permAVX.hpp"
 #include <array>
+#include <cstddef>
+#include <immintrin.h>
 #include <numeric>
 #include <ostream>
+#include <iterator>
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";
@@ -21,10 +25,11 @@ int main(int, char **) {
   display_involution(invST.first);
   std::cout << std::endl;
   display_involution(invST.second);
-  std::cout << "\nEt finalement ses chemins dans le graphe de Young-Fibonacci:\n" << std::endl;
+  std::cout
+      << "\nEt finalement ses chemins dans le graphe de Young-Fibonacci:\n"
+      << std::endl;
   auto r = permutationToChains(p1);
   display_chains(r);
-
   std::cout << "------------------------------------------------------"
             << std::endl;
 
@@ -35,15 +40,18 @@ int main(int, char **) {
   std::cout << "Voici ses InvolutionsCLists:" << std::endl
             << inv2.first << std::endl
             << inv2.second << std::endl;
-
   InvolutionsVector invST2 = janvierInsertion(p2);
   std::cout << "Voici ses YFST:" << std::endl;
   display_involution(invST2.first);
   std::cout << std::endl;
   display_involution(invST2.second);
-  std::cout << "\nEt finalement ses chemins dans le graphe de Young-Fibonacci:\n" << std::endl;
+  std::cout
+      << "\nEt finalement ses chemins dans le graphe de Young-Fibonacci:\n"
+      << std::endl;
   auto r2 = permutationToChains(p2);
   display_chains(r2);
+  std::cout << "------------------------------------------------------"
+            << std::endl;
 
   return 0;
 }
