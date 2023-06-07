@@ -29,6 +29,29 @@ void insertCList(unsigned char key, unsigned char element,
   }
 }
 
+void insertFList(unsigned char key, unsigned char element, InvolutionsFList &l,
+                FLIterator prev1, FLIterator prev2, FLIterator it1,
+                FLIterator it2) {
+  if (element < (*it1)[0]) {
+    if ((*it1)[1] == 0) {
+      (*it1)[1] = element;
+      (*it2)[1] = key;
+    } else {
+      unsigned char temp = (*it1)[1];
+      (*it1)[1] = element;
+      if (std::next(it1) == l.first.end()) {
+        l.first.insert_after(it1, {temp, 0});
+        l.second.insert_after(it2, {key, 0});
+      } else {
+        insertFList(key, temp, l, it1, it2, std::next(it1), std::next(it2));
+      }
+    }
+  } else {
+    l.first.insert_after(prev1, {element, 0});
+    l.second.insert_after(prev2, {key, 0});
+  }
+}
+
 void insertList(unsigned char key, unsigned char element, InvolutionsList &l,
                 LIterator it1, LIterator it2) {
   if (element < (*it1)[0]) {

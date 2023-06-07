@@ -30,6 +30,30 @@ BENCHMARK(BM_robyInsertionCL8);
 BENCHMARK(BM_robyInsertionCL64);
 BENCHMARK(BM_robyInsertionCL20);
 
+static void BM_robyInsertionFL8(benchmark::State& state) {
+  std::array<Permutation<8>, 50> perm8 = init8();
+  for (auto _ : state)
+    for (auto p: perm8)
+      robyInsertionFList(p);
+}
+
+static void BM_robyInsertionFL64(benchmark::State& state) {
+  std::array<Permutation<64>, 50> perm64 = init64();
+  for (auto _ : state)
+    for (auto p: perm64)
+      robyInsertionFList(p);
+}
+
+static void BM_robyInsertionFL20(benchmark::State& state) {
+  std::array<Permutation<20>, 1000> perm20 = init20();
+  for (auto _ : state)
+    for (auto p: perm20)
+        robyInsertionFList(p);
+}
+BENCHMARK(BM_robyInsertionFL8);
+BENCHMARK(BM_robyInsertionFL64);
+BENCHMARK(BM_robyInsertionFL20);
+
 static void BM_robyInsertionL8(benchmark::State& state) {
   std::array<Permutation<8>, 50> perm8 = init8();
   for (auto _ : state)

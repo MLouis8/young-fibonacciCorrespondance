@@ -53,6 +53,32 @@ TEST_CASE("Test insertion de Roby, version vector") {
   CHECK(vector_C.second == res_C.second);
 }
 
+TEST_CASE("Test insertion de Roby, version std::list") {
+  InvolutionsList list_A = robyInsertionList(p1);
+  InvolutionsList res_A = {{{3, 1}, {2, 0}}, {{2, 3}, {1, 0}}};
+  CHECK(list_A.first == res_A.first);
+  CHECK(list_A.second == res_A.second);
+
+  InvolutionsList list_C = robyInsertionList(p3);
+  InvolutionsList res_C = {{{5, 2}, {4, 1}, {3, 0}},
+                             {{1, 2}, {4, 5}, {3, 0}}};
+  CHECK(list_C.first == res_C.first);
+  CHECK(list_C.second == res_C.second);
+}
+
+TEST_CASE("Test insertion de Roby, version std::forward_list") {
+  InvolutionsFList flist_A = robyInsertionFList(p1);
+  InvolutionsFList res_A = {{{3, 1}, {2, 0}}, {{2, 3}, {1, 0}}};
+  CHECK(flist_A.first == res_A.first);
+  CHECK(flist_A.second == res_A.second);
+
+  InvolutionsFList flist_C = robyInsertionFList(p3);
+  InvolutionsFList res_C = {{{5, 2}, {4, 1}, {3, 0}},
+                             {{1, 2}, {4, 5}, {3, 0}}};
+  CHECK(flist_C.first == res_C.first);
+  CHECK(flist_C.second == res_C.second);
+}
+
 TEST_CASE("Test insertion Janvier") {
   InvolutionsVector vector_A = janvierInsertion(p1);
   InvolutionsVector res_A = {{{1, 3}, {2, 0}}, {{2, 3}, {1, 0}}};

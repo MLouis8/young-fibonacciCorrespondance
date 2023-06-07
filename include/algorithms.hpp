@@ -6,9 +6,11 @@
 #include <algorithm>
 #include <array>
 #include <cstddef>
-#include <list>
+#include <forward_list>
+#include <iterator>
 #include <numeric>
 #include <utility>
+#include <list>
 
 typedef std::pair<std::vector<std::array<unsigned char, 2>>,
                   std::vector<std::array<unsigned char, 2>>>
@@ -19,6 +21,13 @@ typedef std::pair<std::list<std::array<unsigned char, 2>>,
     InvolutionsList;
 
 typedef std::_List_iterator<std::array<unsigned char, 2>> LIterator;
+
+
+typedef std::pair<std::forward_list<std::array<unsigned char, 2>>,
+                  std::forward_list<std::array<unsigned char, 2>>>
+    InvolutionsFList;
+
+typedef std::_Fwd_list_iterator<std::array<unsigned char, 2>> FLIterator;
 
 void insertCList(unsigned char key, unsigned char element,
                  InvolutionsCLists &prevs, InvolutionsCLists &act,
@@ -57,6 +66,26 @@ template <size_t T> InvolutionsVector robyInsertionVector(Permutation<T> p) {
   res.second.push_back({1, 0});
   for (unsigned char k = 2; k <= p.size(); k++) {
     insertVector(k, p.call(k), res, 0);
+  }
+  return res;
+}
+
+void insertFList(unsigned char key, unsigned char element, InvolutionsFList &l,
+                FLIterator prev1, FLIterator prev2, FLIterator it1, FLIterator it2);
+
+template <size_t T> InvolutionsFList robyInsertionFList(Permutation<T> p) {
+  /**
+   * @brief Roby's Insertion algorithm.
+   * @param p a permutation
+   * @return a std::pair of InvolutionsCLists (List)
+   */
+  InvolutionsFList res;
+  res.first.push_front({p.call(1), 0});
+  res.second.push_front({1, 0});
+  for (unsigned char k = 2; k <= p.size(); k++) {
+    insertFList(k, p.call(k), res, res.first.before_begin(),
+               res.second.before_begin(), res.first.begin(),
+               res.second.begin());
   }
   return res;
 }
