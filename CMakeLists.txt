@@ -10,11 +10,12 @@ add_executable(benchmarks benchmark/benchmark.cpp)
 
 add_test(NAME AlgoTester COMMAND testAlgo)
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
-
 find_package(benchmark REQUIRED)
 target_link_libraries(benchmarks benchmark::benchmark)
 
-add_compile_options(-mavx2)
+target_link_options(young-fibonacci PUBLIC -mavx -mavx2 -mfma)
+target_compile_options(young-fibonacci PUBLIC -mavx -mavx2 -mfma)
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)

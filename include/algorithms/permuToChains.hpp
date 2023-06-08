@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../src/display.cpp"
 #include "../involutionChainList.hpp"
 #include "../permutation.hpp"
 
@@ -33,4 +32,18 @@ permutationToChains(Permutation<T> p) {
     }
   }
   return {chain1, chain2};
+}
+
+template <size_t T>
+size_t computeFiboNode(std::array<bool, T> blacklist, Permutation<T> &p) {
+  size_t res = 0;
+  unsigned char s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
+  while (s < blacklist.size()) {
+    std::pair<unsigned char, unsigned char> maxi =
+        p.maxNotBlacklisted(blacklist);
+    blacklist[maxi.first - 1] = true;
+    res = res * 10 + p.fominRule(maxi.first, blacklist);
+    s = std::accumulate(blacklist.begin(), blacklist.end(), 0);
+  }
+  return res;
 }

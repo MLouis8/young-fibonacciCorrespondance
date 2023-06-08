@@ -43,6 +43,8 @@ public:
     return res;
   }
 
+  //unsigned char* data() const { return permutation; }
+
   unsigned char size() const { return permutation.size(); }
 
   unsigned char back() const { return permutation.back(); }

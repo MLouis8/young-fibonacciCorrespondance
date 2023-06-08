@@ -1,10 +1,13 @@
+#include <array>
+#include <cstring>
+#include <immintrin.h>
+
 #include "include/algorithms/janvierInsertion.hpp"
 #include "include/algorithms/permuToChains.hpp"
-#include "include/permAVX.hpp"
 #include "include/display.hpp"
-#include "src/robyInsertion.cpp"
-#include "src/involutionChainList.cpp"
 #include "src/display.cpp"
+#include "src/involutionChainList.cpp"
+#include "src/robyInsertion.cpp"
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";
@@ -48,7 +51,17 @@ int main(int, char **) {
   display_chains(r2);
   std::cout << "------------------------------------------------------"
             << std::endl;
-  PermAVX<2>p_avx = PermAVX<2>({2, 3});
-  display_AVX_vector<2>(p_avx.call(0));
+  std::array<unsigned char, 32> data;
+  data.fill(2);
+  __m256i avx = _mm256_load_si256((__m256i *)&data[0]);
+
+  int d = _mm256_extract_epi8(avx, 3);
+
+  std::array<unsigned char, 32> res;
+  memcpy(res.begin(), &avx, sizeof(res));
+
+  for (int i = 0; i < 32; i++) {
+    std::cout << static_cast<int>(res[i]) << " ";
+  }
   return 0;
 }
