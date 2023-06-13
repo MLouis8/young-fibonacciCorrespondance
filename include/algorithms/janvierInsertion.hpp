@@ -3,12 +3,12 @@
 #include "../involutionChainList.hpp"
 #include "../permutation.hpp"
 
-template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
-  /**
+/**
    * @brief Janvier's modifications of Roby's insertion algorithm
    * @param p a permutation
    * @return a pair of standard Young-Fibonacci Tableaux (involution)
    */
+template <size_t T> InvolutionsVector janvierInsertion(Permutation<T> p) {
   InvolutionsVector res;
   std::array<bool, T> blacklist;
   blacklist.fill(false);

@@ -1,10 +1,16 @@
+#include <algorithm>
 #include <array>
 #include <cstring>
+#include <emmintrin.h>
 #include <immintrin.h>
+#include <smmintrin.h>
+#include <tmmintrin.h>
 
 #include "include/algorithms/janvierInsertion.hpp"
 #include "include/algorithms/permuToChains.hpp"
 #include "include/display.hpp"
+#include "include/permutation.hpp"
+#include "src/avxLib.cpp"
 #include "src/display.cpp"
 #include "src/involutionChainList.cpp"
 #include "src/robyInsertion.cpp"
@@ -51,17 +57,17 @@ int main(int, char **) {
   display_chains(r2);
   std::cout << "------------------------------------------------------"
             << std::endl;
-  std::array<unsigned char, 32> data;
-  data.fill(2);
-  __m256i avx = _mm256_load_si256((__m256i *)&data[0]);
+  // std::array<unsigned char, 32> data;
+  // data.fill(2);
+  // __m256i avx = _mm256_load_si256((__m256i *)&data[0]);
 
-  int d = _mm256_extract_epi8(avx, 3);
+  // int d = _mm256_extract_epi8(avx, 3);
 
-  std::array<unsigned char, 32> res;
-  memcpy(res.begin(), &avx, sizeof(res));
+  // std::array<unsigned char, 32> res;
+  // memcpy(res.begin(), &avx, sizeof(res));
 
-  for (int i = 0; i < 32; i++) {
-    std::cout << static_cast<int>(res[i]) << " ";
-  }
+  // for (int i = 0; i < 32; i++) {
+  //   std::cout << static_cast<int>(res[i]) << " ";
+  // }
   return 0;
 }

@@ -8,12 +8,12 @@ void insertCList(unsigned char key, unsigned char element,
                  InvolutionsCLists &prevs, InvolutionsCLists &act,
                  InvolutionsCLists &heads);
 
-template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
-  /**
+/**
    * @brief Roby's Insertion algorithm.
    * @param p a permutation
    * @return a std::pair of InvolutionsCLists (Chain Lists)
    */
+template <size_t T> InvolutionsCLists robyInsertionCList(Permutation<T> p) {
   InvolutionsCLists heads;
   InvolutionsCLists act;
   InvolutionsCLists prevs;

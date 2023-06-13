@@ -6,15 +6,18 @@ enable_testing()
 
 add_executable(young-fibonacci main.cpp)
 add_executable(AlgoTester test/testAlgorithms.cpp)
-add_executable(benchmarks benchmark/benchmark.cpp)
+add_executable(AVXTester test/testAVX.cpp)
+add_executable(benchmarks benchmark/benchmarks.cpp)
 
 add_test(NAME AlgoTester COMMAND testAlgo)
+add_test(NAME AVXTester COMMAND testAVX)
 
 find_package(benchmark REQUIRED)
 target_link_libraries(benchmarks benchmark::benchmark)
 
-target_link_options(young-fibonacci PUBLIC -mavx -mavx2 -mfma)
 target_compile_options(young-fibonacci PUBLIC -mavx -mavx2 -mfma)
+target_compile_options(AVXTester PUBLIC -mavx -mavx2 -mfma)
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

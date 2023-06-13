@@ -3,16 +3,16 @@
 #include "../involutionChainList.hpp"
 #include "../permutation.hpp"
 
-template <size_t T>
-std::pair<std::array<size_t, T + 1>, std::array<size_t, T + 1>>
-permutationToChains(Permutation<T> p) {
-  /**
+/**
    * @brief Returns pair of chains in the Young-Fibonacci lattice from a
    * permutation, without computing growth diagram.
    *
    * @param p a permutation
    * @return pair of paths in the Young-Fibonacci graph
    */
+template <size_t T>
+std::pair<std::array<size_t, T + 1>, std::array<size_t, T + 1>>
+permutationToChains(Permutation<T> p) {
   std::array<size_t, T + 1> chain1, chain2;
   std::array<bool, T> blacklistQ;
   blacklistQ.fill(true);
