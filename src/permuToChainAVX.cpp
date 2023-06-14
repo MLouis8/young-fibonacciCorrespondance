@@ -43,8 +43,8 @@ size_t computeFiboNodeAVX(__m128i p, __m128i bl) {
  */
 std::pair<std::array<std::size_t, 17>, std::array<size_t, 17>>
 permutation16ToChainsAVX(__m128i p) {
-  __m128i blacklistQ = permbl02;
-  __m128i blacklistP = permzero;
+  __m128i blacklistQ = mask02;
+  __m128i blacklistP = zeromask;
   std::array<size_t, 17> chain1, chain2;
   for (int i = 0; i < 2; i++) {
     chain1[i] = i;
