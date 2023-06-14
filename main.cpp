@@ -75,11 +75,9 @@ int main(int, char **) {
   std::array<unsigned char, 16> arr0 = {4, 11, 7,  2, 6, 13, 16, 1,
                                         5, 14, 12, 3, 9, 15, 8,  10};
   __m128i perm0 = perm_ar16(arr0);
-  __m128i mask = maskneg02;
-  std::cout << "test:\n" << "id: " << perm0 <<"\nmask: " << mask << "\n";
-  //perm0 = apply_rev_blacklist255(perm0, mask);
-  std::cout << "\n" << apply_rev_blacklist17(perm0, mask) << "\n";
-  std::cout << "here: " << static_cast<int>(minBlacklistedId(perm0, mask));
-
+  __m128i mask = zeromask;
+  uint8_t c = 0;
+  blacklist(mask, 6);
+  std::cout << rule(perm0, 6, mask, c);
   return 0;
 }

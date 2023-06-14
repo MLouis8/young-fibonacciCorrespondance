@@ -46,9 +46,20 @@ TEST_CASE("test fonction minBlacklistedId") {
   CHECK(minBlacklistedId(id, maskneg02) == 14);
 }
 
-// TEST_CASE("test fonction rule") {
-
-// }
+TEST_CASE("test fonction rule") {
+    uint8_t c = 0;
+    __m128i mask = zeromask;
+    blacklist(mask, 6);
+    CHECK(rule(perm0, 6, mask, c) == 2);
+    blacklist(mask, 13);
+    CHECK(rule(perm0, 13, mask, c) == 2);
+    blacklist(mask, 9);
+    CHECK(rule(perm0, 9, mask, c) == 2);
+    blacklist(mask, 5);
+    CHECK(rule(perm0, 5, mask, c) == 2);
+    blacklist(mask, 10);
+    CHECK(rule(perm0, 10, mask, c) == 1);    
+}
 
 // TEST_CASE("test fonction computeFiboNodeAVX") {
 
