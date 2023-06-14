@@ -14,8 +14,8 @@
 #include "include/permutation.hpp"
 #include "src/display.cpp"
 #include "src/involutionChainList.cpp"
-#include "src/robyInsertion.cpp"
 #include "src/permuToChainAVX.cpp"
+#include "src/robyInsertion.cpp"
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";
@@ -59,23 +59,27 @@ int main(int, char **) {
   display_chains(r2);
   std::cout << "------------------------------------------------------"
             << std::endl;
-  // __m128i testPerm = perm_ar16({4, 11, 7, 2, 6, 13, 16, 1, 5, 14, 12, 3, 9, 15, 8, 10});
+  // __m128i testPerm = perm_ar16({4, 11, 7, 2, 6, 13, 16, 1, 5, 14, 12, 3, 9,
+  // 15, 8, 10});
   // __m128i bl = permbl02;
   // //blacklist(bl, 2);
   // uint8_t c = _mm_popcnt_u32(_mm_movemask_epi8(bl));
   // std::cout << "\nc: " << static_cast<int>(c) << "\n";
   // std::cout << rule(permid, 1, bl, c);
 
-  // auto res = permutationToChains(Permutation<16>({4, 11, 7, 2, 6, 13, 16, 1, 5, 14, 12, 3, 9, 15, 8, 10})).first;
-  // for (auto e : res) {
+  // auto res = permutationToChains(Permutation<16>({4, 11, 7, 2, 6, 13, 16, 1,
+  // 5, 14, 12, 3, 9, 15, 8, 10})).first; for (auto e : res) {
   //   std::cout << " " << e;
   // }
 
-  std::array<unsigned char, 16> arr0 = {4, 11, 7, 2, 6, 13, 16, 1, 5, 14, 12, 3, 9, 15, 8, 10};
+  std::array<unsigned char, 16> arr0 = {4, 11, 7,  2, 6, 13, 16, 1,
+                                        5, 14, 12, 3, 9, 15, 8,  10};
   __m128i perm0 = perm_ar16(arr0);
-  __m128i mask = zeromask;
-  mask[0] = 255;
-  std::cout << "test:\n" << "id: " << permid <<"\nmask: " << mask << "\n";
-  
+  __m128i mask = maskneg02;
+  std::cout << "test:\n" << "id: " << perm0 <<"\nmask: " << mask << "\n";
+  //perm0 = apply_rev_blacklist255(perm0, mask);
+  std::cout << "\n" << apply_rev_blacklist17(perm0, mask) << "\n";
+  std::cout << "here: " << static_cast<int>(minBlacklistedId(perm0, mask));
+
   return 0;
 }

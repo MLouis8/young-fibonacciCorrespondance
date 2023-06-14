@@ -13,7 +13,8 @@
 
 #include "../include/permutation.hpp"
 
-// rappel fonctionnement masks: 0 -> element est valide; 255 -> element n'est pas disponible (blacklisted, masked)
+// rappel fonctionnement masks: 0 -> element est valide; 255 -> element n'est
+// pas disponible (blacklisted, masked)
 
 using namespace std;
 using ar16 = array<uint8_t, 16>;
@@ -51,17 +52,19 @@ ostream &operator<<(ostream &stream, __m128i const &p) {
 const ar16 ar16pid = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 const ar16 ar16id = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 const ar16 ar16zero = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
+const ar16 ar16seventeen = {17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17}; 
 const ar16 ar16shift1 = {15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 const ar16 ar16shift2 = {14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 const ar16 ar16shift4 = {12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 const ar16 ar16shift8 = {8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7};
 
 const ar16 arrbl02 = {255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+const ar16 narrbl02 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255};
 
 const __m128i permid = perm_ar16(ar16pid);
 const __m128i id = perm_ar16(ar16id);
 const __m128i zeromask = perm_ar16(ar16zero);
+const __m128i seventeenmask = perm_ar16(ar16seventeen);
 const __m128i fullmask = perm_ar16({255, 255, 255, 255, 255, 255, 255, 255, 255,
                                     255, 255, 255, 255, 255, 255, 255});
 
@@ -70,9 +73,10 @@ const std::vector<__m128i> shift_array = {
     perm_ar16(ar16shift8)};
 
 const __m128i mask02 = perm_ar16(arrbl02);
+const __m128i maskneg02 = perm_ar16(narrbl02);
 
 inline void blacklist(__m128i &bl, uint8_t pos) {
-  __m128i vecPos = _mm_broadcastb_epi8(zeromask+pos);
+  __m128i vecPos = _mm_broadcastb_epi8(zeromask + pos);
   bl += _mm_cmpeq_epi8(vecPos, id);
 }
 
@@ -80,16 +84,16 @@ inline __m128i apply_blacklist(const __m128i p, const __m128i bl) {
   return _mm_blendv_epi8(p, zeromask, bl);
 }
 
-inline __m128i apply_blacklist255(const __m128i p, const __m128i bl) {
-  return _mm_blendv_epi8(p, fullmask, bl);
+inline __m128i apply_blacklist17(const __m128i p, const __m128i bl) {
+  return _mm_blendv_epi8(p, seventeenmask, bl);
 }
 
 inline __m128i apply_rev_blacklist(const __m128i p, const __m128i bl) {
   return _mm_blendv_epi8(zeromask, p, bl);
 }
 
-inline __m128i apply_rev_blacklist255(const __m128i p, const __m128i bl) {
-  return _mm_blendv_epi8(fullmask, p, bl);
+inline __m128i apply_rev_blacklist17(const __m128i p, const __m128i bl) {
+  return _mm_blendv_epi8(seventeenmask, p, bl);
 }
 
 uint8_t max_epi8(__m128i p) {
@@ -111,14 +115,14 @@ uint8_t min_epi8(__m128i p) {
 }
 
 uint8_t minBlacklisted(__m128i p, __m128i bl) {
-  p = apply_rev_blacklist255(p, bl);
+  p = apply_rev_blacklist17(p, bl);
   return min_epi8(p);
 }
 
 uint8_t minBlacklistedId(__m128i p, __m128i bl) {
-  p = apply_rev_blacklist255(p, bl);
+  p = apply_rev_blacklist17(p, bl);
   __m128i idx, m, p_shifted, idx_shifted;
-  idx = permid;
+  idx = id;
   for (__m128i shift_p : shift_array) {
     p_shifted = _mm_shuffle_epi8(p, shift_p);
     idx_shifted = _mm_shuffle_epi8(idx, shift_p);
@@ -131,9 +135,8 @@ uint8_t minBlacklistedId(__m128i p, __m128i bl) {
 
 uint8_t maxNotBlacklistedId(__m128i p, __m128i bl) {
   p = apply_blacklist(p, bl);
-  std::cout << "bl applied:" << p;
   __m128i idx, m, p_shifted, idx_shifted;
-  idx = permid;
+  idx = id;
   for (__m128i shift_p : shift_array) {
     p_shifted = _mm_shuffle_epi8(p, shift_p);
     idx_shifted = _mm_shuffle_epi8(idx, shift_p);
