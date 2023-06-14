@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <cstring>
 #include <emmintrin.h>
 #include <immintrin.h>
@@ -10,10 +11,10 @@
 #include "include/algorithms/permuToChains.hpp"
 #include "include/display.hpp"
 #include "include/permutation.hpp"
-#include "src/avxLib.cpp"
 #include "src/display.cpp"
 #include "src/involutionChainList.cpp"
 #include "src/robyInsertion.cpp"
+#include "src/permuToChainAVX.cpp"
 
 int main(int, char **) {
   std::cout << "Hello, world!\n";
@@ -57,17 +58,11 @@ int main(int, char **) {
   display_chains(r2);
   std::cout << "------------------------------------------------------"
             << std::endl;
-  // std::array<unsigned char, 32> data;
-  // data.fill(2);
-  // __m256i avx = _mm256_load_si256((__m256i *)&data[0]);
-
-  // int d = _mm256_extract_epi8(avx, 3);
-
-  // std::array<unsigned char, 32> res;
-  // memcpy(res.begin(), &avx, sizeof(res));
-
-  // for (int i = 0; i < 32; i++) {
-  //   std::cout << static_cast<int>(res[i]) << " ";
-  // }
+  __m128i testPerm = perm_ar16({4, 11, 7, 2, 6, 13, 16, 1, 5, 14, 12, 3, 9, 15, 8, 10});
+  __m128i bl = permbl02;
+  //blacklist(bl, 2);
+  uint8_t c = _mm_popcnt_u32(_mm_movemask_epi8(bl));
+  std::cout << "\nc: " << static_cast<int>(c) << "\n";
+  std::cout << rule(permid, 1, bl, c);
   return 0;
 }

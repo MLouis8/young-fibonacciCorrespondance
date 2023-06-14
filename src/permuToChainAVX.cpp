@@ -1,20 +1,33 @@
 #include "avxLib.cpp"
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <emmintrin.h>
+#include <popcntintrin.h>
 #include <smmintrin.h>
 
 int rule(__m128i p, uint8_t idMax, __m128i &bl, uint8_t &cpt) {
-  return 0;
+  p = apply_blacklist(p, bl);
+  cpt--;
+  uint8_t lsb = _mm_movemask_epi8(p);
+  lsb &= -lsb;
+  uint8_t pos = log2(lsb);
+  if (pos <= idMax) {
+    return 1;
+  } else {
+    blacklist(bl, pos);
+    cpt--;
+    return 2;
+  }
 }
 
 size_t computeFiboNodeAVX(__m128i p, __m128i bl) {
   size_t res = 0;
   uint8_t cpt, idMax;
-  cpt = _mm_movemask_epi8(bl);
+  cpt = _mm_popcnt_u32(_mm_movemask_epi8(bl));
   while (cpt > 0) {
     idMax = maxNotBlacklistedId(p, bl);
-    blacklist(bl, idMax-1);
+    blacklist(bl, idMax - 1);
     res = res * 10 + rule(p, idMax, bl, cpt);
   }
   return res;
@@ -28,7 +41,7 @@ size_t computeFiboNodeAVX(__m128i p, __m128i bl) {
  * @param p a __m128i permutation
  * @return pair of paths in the Young-Fibonacci graph
  */
- std::pair<std::array<std::size_t, 17>, std::array<size_t, 17>>
+std::pair<std::array<std::size_t, 17>, std::array<size_t, 17>>
 permutation16ToChainsAVX(__m128i p) {
   __m128i blacklistQ = permbl02;
   __m128i blacklistP = permzero;
@@ -47,6 +60,6 @@ permutation16ToChainsAVX(__m128i p) {
     blacklist(blacklistP, minBlacklistedId(p, blacklistP));
     blacklist(blacklistQ, i);
   }
-  
+
   return {chain1, chain2};
 }
