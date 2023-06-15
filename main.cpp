@@ -76,8 +76,7 @@ int main(int, char **) {
                                         5, 14, 12, 3, 9, 15, 8,  10};
   __m128i perm0 = perm_ar16(arr0);
   __m128i mask = zeromask;
-  uint8_t c = 0;
-  blacklist(mask, 6);
-  std::cout << rule(perm0, 6, mask, c);
+  std::cout << "Let's go: ";
+  std::cout << _mm_popcnt_u32(_mm_movemask_epi8(fullmask));
   return 0;
 }

@@ -10,16 +10,14 @@
 
 int rule(__m128i p, uint8_t idMax, __m128i &bl, uint8_t &cpt) {
   p = apply_blacklist(p, bl);
-  std::cout << "\nbl: " << bl;
-  std::cout << "\nafter bl :" << p;
-  cpt--;
+  cpt++;
   int msb = _mm_movemask_epi8(_mm_blendv_epi8(fullmask, zeromask, bl));
   uint8_t pos = _bit_scan_reverse(msb);
   if (pos <= idMax) {
     return 1;
   } else {
     blacklist(bl, pos);
-    cpt--;
+    cpt++;
     return 2;
   }
 }
@@ -28,9 +26,9 @@ size_t computeFiboNodeAVX(__m128i p, __m128i bl) {
   size_t res = 0;
   uint8_t cpt, idMax;
   cpt = _mm_popcnt_u32(_mm_movemask_epi8(bl));
-  while (cpt > 0) {
+  while (cpt < 16) {
     idMax = maxNotBlacklistedId(p, bl);
-    blacklist(bl, idMax - 1);
+    blacklist(bl, idMax);
     res = res * 10 + rule(p, idMax, bl, cpt);
   }
   return res;

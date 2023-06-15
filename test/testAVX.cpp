@@ -47,27 +47,38 @@ TEST_CASE("test fonction minBlacklistedId") {
 }
 
 TEST_CASE("test fonction rule") {
-    uint8_t c = 0;
-    __m128i mask = zeromask;
-    blacklist(mask, 6);
-    CHECK(rule(perm0, 6, mask, c) == 2);
-    blacklist(mask, 13);
-    CHECK(rule(perm0, 13, mask, c) == 2);
-    blacklist(mask, 9);
-    CHECK(rule(perm0, 9, mask, c) == 2);
-    blacklist(mask, 5);
-    CHECK(rule(perm0, 5, mask, c) == 2);
-    blacklist(mask, 10);
-    CHECK(rule(perm0, 10, mask, c) == 1);    
+  uint8_t c = 0;
+  __m128i mask = zeromask;
+  blacklist(mask, 6);
+  CHECK(rule(perm0, 6, mask, c) == 2);
+  blacklist(mask, 13);
+  CHECK(rule(perm0, 13, mask, c) == 2);
+  blacklist(mask, 9);
+  CHECK(rule(perm0, 9, mask, c) == 2);
+  blacklist(mask, 5);
+  CHECK(rule(perm0, 5, mask, c) == 2);
+  blacklist(mask, 10);
+  CHECK(rule(perm0, 10, mask, c) == 1);
+  blacklist(mask, 1);
+  CHECK(rule(perm0, 1, mask, c) == 2);
+  blacklist(mask, 2);
+  CHECK(rule(perm0, 2, mask, c) == 2);
+  blacklist(mask, 4);
+  CHECK(rule(perm0, 4, mask, c) == 1);
+  blacklist(mask, 0);
+  CHECK(rule(perm0, 0, mask, c) == 2);
 }
 
-// TEST_CASE("test fonction computeFiboNodeAVX") {
-
-// }
+TEST_CASE("test fonction computeFiboNodeAVX") {
+  __m128i mask1 = zeromask;
+  CHECK(computeFiboNodeAVX(perm0, mask1) == 222212212);
+  blacklist(mask1, 15);
+  CHECK(computeFiboNodeAVX(perm0, mask1) == 212212212);
+  __m128i mask2 = zeromask;
+  blacklist(mask2, 6);
+  CHECK(computeFiboNodeAVX(perm0, mask2) == 22222212);
+}
 
 // TEST_CASE("test de l'algo de permuToChainAVX") {
-//     auto check = permutationToChains(Permutation<16>(arr0));
-//     auto res = permutation16ToChainsAVX(perm0);
-//     CHECK(res.first == check.first);
-//     CHECK(res.second == check.second);
+
 // }
