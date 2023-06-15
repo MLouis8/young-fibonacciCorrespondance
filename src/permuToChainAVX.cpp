@@ -6,19 +6,15 @@
 #include <immintrin.h>
 #include <popcntintrin.h>
 #include <smmintrin.h>
+#include <x86intrin.h>
 
 int rule(__m128i p, uint8_t idMax, __m128i &bl, uint8_t &cpt) {
   p = apply_blacklist(p, bl);
   std::cout << "\nbl: " << bl;
   std::cout << "\nafter bl :" << p;
   cpt--;
-  uint8_t lsb = _mm_movemask_epi8((_mm_cmpeq_epi8(p, zeromask)-1));
-  std::cout << "\ncmp: " << _mm_cmpeq_epi8(p, zeromask)-1;
-  std::cout << "\nmovemask: "<< static_cast<int>(lsb);
-  lsb &= -lsb;
-  std::cout << "\nlsb: "<< static_cast<int>(lsb);
-  uint8_t pos = 15-log2(lsb);
-  std::cout << "\npos: "<< static_cast<int>(pos) << " idmax: " << static_cast<int>(idMax) << "\n";
+  int msb = _mm_movemask_epi8(_mm_blendv_epi8(fullmask, zeromask, bl));
+  uint8_t pos = _bit_scan_reverse(msb);
   if (pos <= idMax) {
     return 1;
   } else {

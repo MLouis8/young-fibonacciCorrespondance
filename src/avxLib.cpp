@@ -15,6 +15,7 @@
 
 // rappel fonctionnement masks: 0 -> element est valide; 255 -> element n'est
 // pas disponible (blacklisted, masked)
+// extraire le bit le plus faible en c++ : lsb &= -lsb;
 
 using namespace std;
 using ar16 = array<uint8_t, 16>;
