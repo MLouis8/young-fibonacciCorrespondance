@@ -1,6 +1,8 @@
-#include "../include/permutation.hpp"
 #include <array>
 #include <cstddef>
+
+#include "../include/permutation.hpp"
+#include "../src/avxLib.cpp"
 
 std::array<std::array<unsigned char, 4>, 50> p4 = {
     {{3, 1, 4, 2}, {1, 2, 3, 4}, {2, 4, 3, 1}, {4, 2, 1, 3}, {2, 4, 1, 3},
@@ -1407,6 +1409,14 @@ static std::array<Permutation<8>, 50> init8() {
   return res;
 }
 
+static std::array<Permutation<16>, 50> init16() {
+  std::array<Permutation<16>, 50> res;
+  for (size_t i = 0; i < 50; i++) {
+    res[i] = Permutation<16>(p16[i]);
+  }
+  return res;
+}
+
 static std::array<Permutation<20>, 1000> init20() {
   std::array<Permutation<20>, 1000> res;
   for (size_t i = 0; i < 1000; i++) {
@@ -1419,6 +1429,14 @@ static std::array<Permutation<64>, 50> init64() {
   std::array<Permutation<64>, 50> res;
   for (size_t i = 0; i < 50; i++) {
     res[i] = Permutation<64>(p64[i]);
+  }
+  return res;
+}
+
+static std::array<__m128i, 50> init16AVX() {
+  std::array<__m128i, 50> res;
+  for (size_t i = 0; i < 50; i++) {
+    res[i] = perm_ar16(p16[i]);
   }
   return res;
 }

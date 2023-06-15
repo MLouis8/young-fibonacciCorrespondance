@@ -75,8 +75,23 @@ int main(int, char **) {
   std::array<unsigned char, 16> arr0 = {4, 11, 7,  2, 6, 13, 16, 1,
                                         5, 14, 12, 3, 9, 15, 8,  10};
   __m128i perm0 = perm_ar16(arr0);
-  __m128i mask = zeromask;
-  std::cout << "Let's go: ";
-  std::cout << _mm_popcnt_u32(_mm_movemask_epi8(fullmask));
+  const ar16 arr1 = {5, 8, 7, 10, 13, 16, 4, 3, 1, 12, 11, 14, 6, 9, 2, 15};
+  __m128i perm1 = perm_ar16(arr1);
+  const ar16 arr2 = {6, 7, 11, 5, 1, 14, 10, 15, 16, 8, 9, 12, 3, 2, 13, 4};
+  __m128i perm2 = perm_ar16(arr2);
+  const ar16 arr3 = {2, 12, 13, 16, 11, 4, 10, 6, 14, 15, 9, 8, 3, 1, 7, 5};
+  __m128i perm3 = perm_ar16(arr3);
+  auto res = permutationToChains(Permutation<16>(arr0));
+  for (auto i : res.second)
+    std::cout << i << " ";
+  std::cout << "\n";
+  res = permutationToChains(Permutation<16>(arr2));
+  for (auto i : res.second)
+    std::cout << i << " ";
+
+  std::cout << "\n";
+  res = permutationToChains(Permutation<16>(arr3));
+  for (auto i : res.second)
+    std::cout << i << " ";
   return 0;
 }
