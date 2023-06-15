@@ -54,7 +54,8 @@ ostream &operator<<(ostream &stream, __m128i const &p) {
 const ar16 ar16pid = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 const ar16 ar16id = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 const ar16 ar16zero = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-const ar16 ar16seventeen = {17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17}; 
+const ar16 ar16seventeen = {17, 17, 17, 17, 17, 17, 17, 17,
+                            17, 17, 17, 17, 17, 17, 17, 17};
 const ar16 ar16shift1 = {15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 const ar16 ar16shift2 = {14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 const ar16 ar16shift4 = {12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
@@ -62,6 +63,8 @@ const ar16 ar16shift8 = {8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7};
 
 const ar16 arrbl02 = {255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 const ar16 narrbl02 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255};
+const ar16 arr2mask = {0,   0,   255, 255, 255, 255, 255, 255,
+                       255, 255, 255, 255, 255, 255, 255, 255};
 
 const __m128i permid = perm_ar16(ar16pid);
 const __m128i id = perm_ar16(ar16id);
@@ -69,7 +72,7 @@ const __m128i zeromask = perm_ar16(ar16zero);
 const __m128i seventeenmask = perm_ar16(ar16seventeen);
 const __m128i fullmask = perm_ar16({255, 255, 255, 255, 255, 255, 255, 255, 255,
                                     255, 255, 255, 255, 255, 255, 255});
-
+const __m128i startMask = perm_ar16(arr2mask);
 const std::vector<__m128i> shift_array = {
     perm_ar16(ar16shift1), perm_ar16(ar16shift2), perm_ar16(ar16shift4),
     perm_ar16(ar16shift8)};
@@ -80,6 +83,11 @@ const __m128i maskneg02 = perm_ar16(narrbl02);
 inline void blacklist(__m128i &bl, uint8_t pos) {
   __m128i vecPos = _mm_broadcastb_epi8(zeromask + pos);
   bl += _mm_cmpeq_epi8(vecPos, id);
+}
+
+inline void unblacklist(__m128i &bl, uint8_t pos) {
+  __m128i vecPos = _mm_broadcastb_epi8(zeromask + pos);
+  bl -= _mm_cmpeq_epi8(vecPos, id);
 }
 
 inline __m128i apply_blacklist(const __m128i p, const __m128i bl) {

@@ -71,7 +71,7 @@ int main(int, char **) {
   // 5, 14, 12, 3, 9, 15, 8, 10})).first; for (auto e : res) {
   //   std::cout << " " << e;
   // }
-
+  std::cout << "Correction:\n";
   std::array<unsigned char, 16> arr0 = {4, 11, 7,  2, 6, 13, 16, 1,
                                         5, 14, 12, 3, 9, 15, 8,  10};
   __m128i perm0 = perm_ar16(arr0);
@@ -82,16 +82,11 @@ int main(int, char **) {
   const ar16 arr3 = {2, 12, 13, 16, 11, 4, 10, 6, 14, 15, 9, 8, 3, 1, 7, 5};
   __m128i perm3 = perm_ar16(arr3);
   auto res = permutationToChains(Permutation<16>(arr0));
-  for (auto i : res.second)
+  for (auto i : res.first)
     std::cout << i << " ";
-  std::cout << "\n";
-  res = permutationToChains(Permutation<16>(arr2));
-  for (auto i : res.second)
-    std::cout << i << " ";
-
-  std::cout << "\n";
-  res = permutationToChains(Permutation<16>(arr3));
-  for (auto i : res.second)
+  std::cout << "\n\nEt le test:";
+  auto tres = permutation16ToChainsAVX(perm0);
+  for (auto i : tres.second)
     std::cout << i << " ";
   return 0;
 }

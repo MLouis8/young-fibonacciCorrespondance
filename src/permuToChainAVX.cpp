@@ -44,23 +44,21 @@ size_t computeFiboNodeAVX(__m128i p, __m128i bl) {
  */
 std::pair<std::array<std::size_t, 17>, std::array<size_t, 17>>
 permutation16ToChainsAVX(__m128i p) {
-  __m128i blacklistQ = mask02;
+  __m128i blacklistQ = zeromask;
   __m128i blacklistP = zeromask;
   std::array<size_t, 17> chain1, chain2;
-  for (int i = 0; i < 2; i++) {
-    chain1[i] = i;
-    chain2[i] = i;
-    blacklist(blacklistP, minBlacklistedId(p, blacklistP));
-  }
-  for (int i = 2; i < 17; i++) {
+  for (int i = 16; i >= 2; i--) {
     // cilk_scope {
     //   cilk_spawn;
     // }
     chain1[i] = computeFiboNodeAVX(p, blacklistP);
     chain2[i] = computeFiboNodeAVX(p, blacklistQ);
-    blacklist(blacklistP, minBlacklistedId(p, blacklistP));
-    blacklist(blacklistQ, i);
+    blacklist(blacklistP, maxNotBlacklistedId(p, blacklistP));
+    blacklist(blacklistQ, i - 1);
   }
-
-  return {chain1, chain2};
+  for (int i = 0; i < 2; i++) {
+    chain1[i] = i;
+    chain2[i] = i;
+  }
+  return {chain2, chain1};
 }

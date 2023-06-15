@@ -15,6 +15,7 @@ add_test(NAME AVXTester COMMAND testAVX)
 find_package(benchmark REQUIRED)
 target_link_libraries(benchmarks benchmark::benchmark)
 
+target_compile_options(benchmarks PUBLIC -mavx -mavx2 -mfma)
 target_compile_options(young-fibonacci PUBLIC -mavx -mavx2 -mfma)
 target_compile_options(AVXTester PUBLIC -mavx -mavx2 -mfma)
 
