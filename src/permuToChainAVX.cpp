@@ -1,12 +1,4 @@
 #include "avxLib.cpp"
-#include <cmath>
-#include <cstddef>
-#include <cstdint>
-#include <emmintrin.h>
-#include <immintrin.h>
-#include <popcntintrin.h>
-#include <smmintrin.h>
-#include <x86intrin.h>
 
 int rule(__m128i p, uint8_t idMax, __m128i &bl, uint8_t &cpt) {
   p = apply_blacklist(p, bl);
@@ -48,9 +40,6 @@ permutation16ToChainsAVX(__m128i p) {
   __m128i blacklistP = zeromask;
   std::array<size_t, 17> chain1, chain2;
   for (int i = 16; i >= 2; i--) {
-    // cilk_scope {
-    //   cilk_spawn;
-    // }
     chain1[i] = computeFiboNodeAVX(p, blacklistP);
     chain2[i] = computeFiboNodeAVX(p, blacklistQ);
     blacklist(blacklistP, maxNotBlacklistedId(p, blacklistP));

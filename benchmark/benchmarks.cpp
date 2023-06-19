@@ -1,5 +1,6 @@
 #include <array>
 #include <benchmark/benchmark.h>
+#include <cilk/cilk.h>
 
 #include "../include/algorithms/janvierInsertion.hpp"
 #include "../include/algorithms/permuToChains.hpp"
