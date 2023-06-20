@@ -40,10 +40,12 @@ permutation16ToChainsAVX(__m128i p) {
   __m128i blacklistP = zeromask;
   std::array<size_t, 17> chain1, chain2;
   for (int i = 16; i >= 2; i--) {
-    chain1[i] = computeFiboNodeAVX(p, blacklistP);
-    chain2[i] = computeFiboNodeAVX(p, blacklistQ);
-    blacklist(blacklistP, maxNotBlacklistedId(p, blacklistP));
-    blacklist(blacklistQ, i - 1);
+    cilk_scope {
+      chain1[i] = cilk_spawn computeFiboNodeAVX(p, blacklistP);
+      chain2[i] = cilk_spawn computeFiboNodeAVX(p, blacklistQ);
+      cilk_spawn blacklist(blacklistP, maxNotBlacklistedId(p, blacklistP));
+      blacklist(blacklistQ, i - 1);
+    }
   }
   for (int i = 0; i < 2; i++) {
     chain1[i] = i;

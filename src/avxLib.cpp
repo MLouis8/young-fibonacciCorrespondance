@@ -4,6 +4,7 @@
 #include <immintrin.h>
 #include <iostream>
 #include <x86intrin.h>
+#include <cilk/cilk.h>
 
 // fonctionnement masks: 0 -> element est valide; 255 -> element pas disponible
 

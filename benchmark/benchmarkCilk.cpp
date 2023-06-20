@@ -1,4 +1,3 @@
-#include <cilk/cilk.h>
 #include <chrono>
 #include "../src/permuToChainAVX.cpp"
 #include "../include/algorithms/permuToChains.hpp"
@@ -18,6 +17,7 @@ int main(int argc, char **argv) {
   for (auto p : perm16)
       permutationToChains(p);
   end = clock();
+  std::cout << "with AVX: 0.115ms\n";
   std::cout << "with AVX and Cilk: " << ((float) endAVX-startAVX)*1000/CLOCKS_PER_SEC << "ms\n";
   std::cout << "without: " << ((float) end-start)*1000/CLOCKS_PER_SEC << "ms\n";
   return 0;
